@@ -1,0 +1,162 @@
+h1,
+h2,
+h3 {
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+}
+
+
+
+.panel {
+    display:inline-block;
+    width: 50%;
+    float: left;
+}
+
+ul.menuBar,
+div.menuBar, 
+span.menuBar {
+  width : 90%;
+  margin-left:auto;
+  margin-right:auto;
+  background-color: #8FBC8F;
+}
+
+ul > li.navbar, ul > li.navbar> a {
+  display :inline-block;
+  color:white !important;
+}
+
+ul > li.navbar:hover > a, 
+ul > li.navbar:visited > a,
+ul > li.navbar:link > a, 
+ul > li.navbar:active > a {
+
+    text-decoration: none ;
+
+} 
+
+ul > li.navbar ,
+a.button,
+input[type='submit'] {
+    display : inline-block;
+    background: #4E9CAF;
+  	margin : 10px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    vertical-align : top ;
+    line-height: inherit;
+    cursor : pointer ;
+
+}
+
+a.button,
+a.button:hover, 
+a.button:visited,
+a.button:link, 
+a.button:active {
+
+    text-decoration: none ;
+
+} 
+
+form, .form {
+  	margin : 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border : 1px solid #4E9CAF;
+
+}
+.label{
+
+	display :inline-block ;
+  padding: 10px;
+  margin-bottom :5px;
+	width : 100px;
+	text-align : right;
+	background-color: #8FBC8F ;
+  border : 1px solid #4E9CAF;
+  border-radius: 5px;
+
+}
+span.input {
+
+  min-width : 200px;
+
+}
+span.textarea {
+
+  min-width : 80% ;
+  min-height:100px;
+}
+
+
+.container {
+	margin-top: 10px;
+}
+
+input, 
+textarea,
+select, 
+.input {
+  border : 1px solid #4E9CAF;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom :5px;
+  vertical-align: top;
+  max-width: 50%;
+  margin-left: 10px;
+}
+
+textarea.notes {
+  width:100%;
+}
+
+label::after {
+	content : "";
+}
+
+
+table {
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
+}
+th, td, table {
+
+	border : 1px solid #4E9CAF;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+tr:hover {
+	background-color: #cce0ff ;
+}
+
+
+td > a , td > a:hover, td > a:visited, td > a:link, td > a:active {
+  display: block;
+  text-decoration: none;
+  cursor :pointer ;
+  vertical-align: top; 
+}
+
+th.id {
+	width: 10%;
+}
+th.name {
+	width: 30%;
+}
+th.bio {
+	width: 60%;
+}
+
