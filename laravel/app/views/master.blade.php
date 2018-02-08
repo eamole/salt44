@@ -10,16 +10,6 @@
 	{{ HTML::style('https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css') }}
 
 
-	<script type="text/javascript">
-		
-		function myLabel(name, text) {
-
-			Form::label(name,text,['class' => 'label']);
-
-		}	
-
-
-	</script>
 </head>
 <body>
 	
@@ -80,6 +70,8 @@
 		
 		$(document).ready(function() {
 		    $('table').DataTable();
+		    // so I can style these differently
+		    $('table').addClass('display');
 		} );
 		
 	</script>

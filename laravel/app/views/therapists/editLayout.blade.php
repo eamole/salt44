@@ -3,7 +3,7 @@
 	
 		<div class='panel'>
 
-			<!-- {{ Form::label('id','ID  :') }} -->
+			<!-- {{ myLabel('id','ID  :') }} -->
 			 {{ Form::input('hidden','id' , $therapist->id , ['readonly'] )  }} 
 			
 			{{ myLabel('name','Name :') }}
