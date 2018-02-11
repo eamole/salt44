@@ -70,6 +70,8 @@
 		
 		$(document).ready(function() {
 		    $('table').DataTable();
+		    // so I can style these differently
+		    $('table').addClass('display');
 		} );
 		
 	</script>

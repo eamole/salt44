@@ -92,6 +92,12 @@ class ApptsController extends BaseController {
 			$old = Appt::findOrFail($id);
 			$appt->client_id = $old->client_id;
 			$appt->therapist_id = $old->therapist_id;
+			// copy the notes - possibly should insert on date
+			
+			// make it a link toprevious appt
+			$prev = HTML::linkRoute('apptDisplay', "Previous Appointment : " . $old->date ,$old->id ); 
+			
+			$appt->notes = "<br><hr> " . $prev .   "<br><hr>" . $old->notes;
 		} 
 
 		$therapists = Therapist::lists('name','id');	//    $appt->therapists;

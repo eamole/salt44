@@ -1,18 +1,20 @@
+<!-- script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=tvbxsa72we4nv1jpkrbcpr3trojzpx3uocvexclbeai4pu7k"></script--> 
+
 	<!-- onSubmit go to apptSave,and pass in the route to this form (for errors) -->
 	{{ Form::model( $appt , array('route' => array('apptSave' , $returnRoute ))) }}
 	
 		<div class='panel' >
 
-			<!-- {{ Form::label('id','ID  :') }} -->
+			<!-- {{ myLabel('id','ID  :') }} -->
 			 {{ Form::input('hidden','id' , $appt->id , ['readonly'] )  }} 
 
-			{{ Form::label('client_id' , 'Client : ') }}
+			{{ myLabel('client_id' , 'Client : ') }}
 				{{ Form::select('client_id',$clients,$appt->client_id) }} <br/>
 
-			{{ Form::label('therapist_id' , 'Therapist : ') }}
+			{{ myLabel('therapist_id' , 'Therapist : ') }}
 				{{ Form::select('therapist_id',$therapists,$appt->therapist_id) }} <br/>
 
-			{{ Form::label('attended' , 'Attended  : ') }}
+			{{ myLabel('attended' , 'Attended  : ') }}
 				{{ Form::checkbox('attended',$appt->attended) }} <br/>				
 
 		</div>
@@ -20,13 +22,13 @@
 		<div class='panel' >
 
 
-			{{ Form::label('date' , 'Date  : ') }}
+			{{ myLabel('date' , 'Date  : ') }}
 				{{ Form::input('date','date',$appt->date) }} <br/>
 
-			{{ Form::label('start' , 'Start  : ') }}
+			{{ myLabel('start' , 'Start  : ') }}
 				{{ Form::input('time','start',$appt->start) }} <br/>
 
-			{{ Form::label('finish' , 'Finish  : ') }}
+			{{ myLabel('finish' , 'Finish  : ') }}
 				{{ Form::input('time','finish',$appt->finish) }} <br/>
 
 
@@ -34,8 +36,8 @@
 
 		<br clear='all' />
 
-		{{ Form::label('notes' , 'Notes : ') }}
-			{{ Form::textarea('notes', $appt->notes,[ 'class' => 'notes' ]) }} <br/>	
+		{{ myLabel('notes' , 'Notes : ') }}
+			{{ Form::textarea('notes', $appt->notes,[ 'class' => 'notes' , 'id' => 'notes' ]) }} <br/>	
 
 		<div class="menuBar">
 			
@@ -49,3 +51,12 @@
 		</div>
 
 	{{ Form::close() }}
+
+	{{ HTML::script('js/tinymce/js/tinymce/tinymce.js') }}
+
+	<script type="text/javascript">
+		
+		tinymce.init({
+    		selector: '#notes'
+  		});
+	</script>

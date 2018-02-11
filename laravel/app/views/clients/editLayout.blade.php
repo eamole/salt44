@@ -4,48 +4,52 @@
 	{{ Form::model( $client , array('route' => array('clientSave' , 'clientEdit' ))) }}
 	
 		<div class='panel'>
-			<!-- {{ Form::label('id','ID  :') }} -->
+			<!-- {{ myLabel('id','ID  :') }} -->
 			 {{ Form::input('hidden','id' , $client->id , ['readonly'] )  }} 
 			
+<<<<<<< HEAD
 			{{ Form::label('name','Name :',array('class'='label')) }}
+=======
+			{{ myLabel('name','Name :') }}
+>>>>>>> e29d018bb0be8def8c855cf5c477b58512ab897f
 			 	{{ Form::text('name',$client->name) }} <br/>
 			
-			{{ Form::label('phone' , 'Phone : ') }}
+			{{ myLabel('phone' , 'Phone : ') }}
 				{{ Form::input('tel','phone',$client->phone) }} <br/>
 
-			{{ Form::label('email' , 'Email : ') }}
+			{{ myLabel('email' , 'Email : ') }}
 				{{ Form::email('email',$client->email) }} <br/>
 
-			{{ Form::label('address' , 'Address : ') }}
+			{{ myLabel('address' , 'Address : ') }}
 				{{ Form::textarea('address',$client->address , [ 'rows' => 4 ]) }} <br/>
 
 		</div>
 
 		<div class='panel'>
 	
-			{{ Form::label('pps' , 'PPS : ') }}
+			{{ myLabel('pps' , 'PPS : ') }}
 				{{ Form::text('pps',$client->pps) }} <br/>
 
-			{{ Form::label('dob' , 'Date of Birth : ') }}
+			{{ myLabel('dob' , 'Date of Birth : ') }}
 				{{ Form::input('date','dob',$client->dob) }} <br/>
 
-			{{ Form::label('therapist_id' , 'Therapist : ') }}
+			{{ myLabel('therapist_id' , 'Therapist : ') }}
 				{{ Form::select('therapist_id',$therapists,$client->therapist_id) }} <br/>
 
-			{{ Form::label('username' , 'Login ID : ') }}
+			{{ myLabel('username' , 'Login ID : ') }}
 				{{ Form::text('username',$client->username) }} <br/>
 
-			{{ Form::label('password' , 'Password : ') }}
+			{{ myLabel('password' , 'Password : ') }}
 				{{ Form::input('password','password',$client->password) }} <br/>
 
-			{{ Form::label('password_confirmation' , 'Confirm : ') }}
+			{{ myLabel('password_confirmation' , 'Confirm : ') }}
 				{{ Form::input('password','password_confirmation',$client->password) }} <br/>
 
 		</div>
 		
 		<br clear='all' />
 
-		{{ Form::label('notes' , 'Notes : ') }}
+		{{ myLabel('notes' , 'Notes : ') }}
 			{{ Form::textarea('notes',$client->notes , [ 'class' => 'notes' ] ) }} <br/>
 
 

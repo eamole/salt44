@@ -1,3 +1,44 @@
+/*
+  apply some styling to inputs on dataTables
+ */
+
+.dataTable {
+  border: 1px solid #4E9CAF;
+  border-radius: 5px;
+  padding : 5px;
+  
+} 
+/* the records per page selector  */
+.dataTables_length select {
+  padding : 5px;
+}
+
+.dataTables_length label {
+  border: 1px solid #4E9CAF;
+  border-radius: 5px;
+  padding : 5px;
+  background-color: #8FBC8F ;
+}
+/*   the serach filter  */
+.dataTables_filter input {
+  padding : 5px;
+}
+.dataTables_filter label {
+  border: 1px solid #4E9CAF;
+  border-radius: 5px;
+  padding : 5px;
+  background-color: #8FBC8F ;
+}
+
+.dataTables_info, .dataTables_paginate  {
+  margin : 5px;
+  border: 1px solid #4E9CAF;
+  border-radius: 5px;
+  padding : 5px;
+  background-color: #8FBC8F ;
+}
+
+
 h1,
 h2,
 h3 {
