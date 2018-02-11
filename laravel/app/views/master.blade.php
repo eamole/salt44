@@ -10,16 +10,6 @@
 	{{ HTML::style('https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css') }}
 
 
-	<script type="text/javascript">
-		
-		function myLabel(name, text) {
-
-			Form::label(name,text,['class' => 'label']);
-
-		}	
-
-
-	</script>
 </head>
 <body>
 	

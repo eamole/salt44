@@ -1,3 +1,5 @@
+
+
 	<!-- onSubmit go to clientSave,and pass in the route to this form (for errors) -->
 	{{ Form::model( $client , array('route' => array('clientSave' , 'clientEdit' ))) }}
 	
@@ -5,7 +7,7 @@
 			<!-- {{ Form::label('id','ID  :') }} -->
 			 {{ Form::input('hidden','id' , $client->id , ['readonly'] )  }} 
 			
-			{{ Form::label('name','Name :') }}
+			{{ Form::label('name','Name :',array('class'='label')) }}
 			 	{{ Form::text('name',$client->name) }} <br/>
 			
 			{{ Form::label('phone' , 'Phone : ') }}
