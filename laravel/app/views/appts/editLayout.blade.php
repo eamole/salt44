@@ -42,7 +42,7 @@
 		<div class="menuBar">
 			
 			<?php 
-				$urlCancel = URL::route('apptDisplay',array($appt->id));
+				$urlCancel = URL::route('apptsDisplayAll');	// array($appt->id)
 			?>
 
 			{{ Form::submit("Save Appointment") }}

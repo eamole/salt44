@@ -9,6 +9,7 @@
 			</tr>
 		</thead>
 		<tbody>
+			
 			@foreach($therapists as $key => $therapist)	<!-- $value is a record/array of values-->
 				<?php 
 					$url = URL::route('therapistDisplay',$therapist->id);
