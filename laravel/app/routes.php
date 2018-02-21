@@ -12,26 +12,28 @@
 */
 
 
-/*
-	this is a global function to render labels with a std html class
-	need to find a better location for this function - somewhere that is loaded for every page 
+require_once('app.php');
 
-	$name : the name of the element to attach the label to
-	$test : the text to display 
- */
-function myLabel($name, $text) {
-
-	$tag = Form::label($name,$text,['class' => 'label']);
-
-	return $tag;
-
-}	
 
 
 Route::get('/', [ 'as' => 'home' , function()
 {
 	return View::make('home',['title' => 'Home']);
 }]);
+
+Route::get('login', [ 'as' => 'login' , function()
+{
+	return View::make('auth.login',['title' => 'Login']);
+}]);
+
+
+
+Route::post('loginValidate',array(
+	'uses' => "LoginController@loginValidate",
+	'as' =>'loginValidate'
+));
+
+
 
 // Route::get('authors', function()
 // {

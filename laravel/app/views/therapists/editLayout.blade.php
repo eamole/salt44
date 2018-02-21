@@ -1,11 +1,6 @@
 	<?php 
 
-		function myLabel($name, $text) {
-
-			Form::label($name, $text,['class' => 'label']);
-
-		}	
-
+		
 
 	?>
 	<!-- onSubmit go to therapistSave,and pass in the route to this form (for errors) -->

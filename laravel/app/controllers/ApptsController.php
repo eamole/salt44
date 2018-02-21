@@ -87,7 +87,7 @@ class ApptsController extends BaseController {
 	public function add($id=null) {
 		
 		$appt = new Appt;
-
+		// copy details from this id to new id
 		if(!empty($id)) {
 			$old = Appt::findOrFail($id);
 			$appt->client_id = $old->client_id;

@@ -15,7 +15,10 @@
 	
 	<h1>Speech & Language Therapy System</h1>
 
-	{{ $menuBar->asUl(['class' => 'menuBar']) }}
+	{{ $menuBar->asUl(['class' => 'menuBar']) }} 
+
+	<!-- login button -->
+	{{ HTML::linkRoute('login',"Login" , null , ['class' => 'button']) }}
 
 	<h2>{{ $title }}</h2>
 
