@@ -17,8 +17,11 @@ class TherapistsController extends BaseController {
 
 	public function index()
 	{	
-
-		$therapists = Therapist::all();
+		if(isAdmin()) {
+			$therapists = Therapist::all();
+		} else {			
+			$therapists = [Therapist::find(userId())];	// need to make it an array!!
+		}
 		return View::make('therapists.index',array(
 			'therapists' => $therapists
 		))->with("title","Therapists");

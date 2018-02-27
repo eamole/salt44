@@ -55,12 +55,18 @@ h3 {
     float: left;
 }
 
+span.userLogin {
+  float : right;
+}
+
 ul.menuBar,
 div.menuBar, 
 span.menuBar {
-  width : 90%;
+/*  width : 90%;
   margin-left:auto;
-  margin-right:auto;
+  margin-right:auto; */
+  width : 90%;
+  display: inline-block;
   background-color: #8FBC8F;
 }
 
@@ -77,6 +83,24 @@ ul > li.navbar:active > a {
     text-decoration: none ;
 
 } 
+
+.message {
+    display : inline-block;
+    background: #8FBC8F;  
+}
+.username {
+    display : inline-block;
+    background: #8FBC8F;
+    margin : 10px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    vertical-align : top ;
+    line-height: inherit;
+
+}
 
 ul > li.navbar ,
 a.button,

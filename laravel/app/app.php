@@ -1,17 +1,33 @@
 <?php 
 
 
-$isLoggedIn=false;
-$isAdmin=false;
-//does session have logged in
-if(Session::has('isLoggedIn')){
+function isLoggedIn() {
+	return Session::has('user');
 
-	$isLoggedIn=Session::get('isLoggedIn');
-	$isAdmin=Session::get('isAdmin');
 }
+function isAdmin() {
+	if(isLoggedIn()) {
+		$user = Session::get('user');
+		return $user->isAdmin;
+	}
+	return false;
 
+}
+function userId() {
+	if(isLoggedIn()) {
+		$user = Session::get('user');
+		return $user->id;
+	}
+}
+/*
+	pass this to the reirect view using the withErrors() method
+ */
+function message($str) {
 
-
+	$mb = new Illuminate\Support\MessageBag();
+	$mb->add('message',$str);
+	return $mb;
+}
 /*
 	this is a global function to render labels with a std html class
 	need to find a better location for this function - somewhere that is loaded for every page 

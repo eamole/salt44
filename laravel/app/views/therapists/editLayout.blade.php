@@ -32,6 +32,10 @@
 
 			{{ myLabel('password_confirmation' , 'Confirm : ') }}
 				{{ Form::input('password','password_confirmation',$therapist->password) }} <br/>
+				
+			{{ myLabel('isAdmin' , 'Admin ? : ') }}
+				{{ Form::checkbox('isAdmin',$therapist->isAdmin) }} <br/>
+				
 
 
 		</div>

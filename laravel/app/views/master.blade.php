@@ -18,7 +18,8 @@
 	{{ $menuBar->asUl(['class' => 'menuBar']) }} 
 
 	<!-- login button -->
-	{{ HTML::linkRoute('login',"Login" , null , ['class' => 'button']) }}
+	{{ LoginController::logInOutButton() }}
+	<!-- {{ HTML::linkRoute('login',"Login" , null , ['class' => 'button']) }} -->
 
 	<h2>{{ $title }}</h2>
 
@@ -34,7 +35,7 @@
 		@endif
 
 		@foreach($errors->all() as $msg)
-			<p>{{$msg}}</p>
+			<p class='message'>{{$msg}}</p>
 		@endforeach
 	
 

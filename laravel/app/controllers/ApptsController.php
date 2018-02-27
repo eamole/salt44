@@ -18,7 +18,11 @@ class ApptsController extends BaseController {
 	public function index()
 	{	
 		
-		$appts = Appt::all();
+		if(isAdmin()) {
+			$appts = Appt::all();
+		} else {			
+			$appts = Appt::where('therapist_id','=',userId())->get();
+		}		
 		return View::make('appts.index',array(
 			'appts' => $appts
 		))->with("title","Appointments");
@@ -98,7 +102,10 @@ class ApptsController extends BaseController {
 			$prev = HTML::linkRoute('apptDisplay', "Previous Appointment : " . $old->date ,$old->id ); 
 			
 			$appt->notes = "<br><hr> " . $prev .   "<br><hr>" . $old->notes;
-		} 
+		} else {
+			// add an appointment to the logged in user's
+			$appt->therapist_id = userId();
+		}
 
 		$therapists = Therapist::lists('name','id');	//    $appt->therapists;
 

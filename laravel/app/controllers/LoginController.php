@@ -2,39 +2,70 @@
 
 class LoginController extends BaseController {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
+
+	public static function logInOutButton() {
+
+		if(Session::has('user')) {
+			$user = Session::get('user');
+			$html = "<span class='userLogin'>";
+			$html .= "<span class='username'>User : ".$user->name."</span>";
+			$html .= HTML::linkRoute('logout',"Logout" , null , ['class' => 'button']);
+			$html .= "</span>";
+		} else {
+
+			$html = "<span class='userLogin'>";
+			$html .= HTML::linkRoute('login',"Login" , null , ['class' => 'button']) ;
+			$html .= "</span>";
+		}
+		return $html;
+
+	}
+
+	public function logout() {
+		// pulling the value deletes it from the Session
+		$user = Session::pull('user');
+		$mb = new Illuminate\Support\MessageBag();
+		$mb->add('login',$user->name." has been logged out");
+		return Redirect::route('home')->withErrors($mb);
+
+
+	}
 
 	public function loginValidate()
 	{	
+		// for messages
+		$mb = new Illuminate\Support\MessageBag();
+
 		$username=Input::get('username');
 		$user=Therapist::where('username','=',$username)->first();
 		
-		if(is_null($user)){
-
+		if(!is_null($user)){
+			
 			//validate password
+			$password = Input::get('password');
+			if($password===$user->password) {
+				// add a message
+				$mb->add("login",$user->name." has been logged in");
+				
+				// store $user in session
+				Session::put('user',$user);
 
-			//if valid 
-			//set is logged in, user id , is admin 
-			//redirect to homepage
+				// return to home page
+				return Redirect::route('home')->withErrors($mb);
+				
+			} else {			
+				// add a amessage
+				$mb->add("login","Invalid user name or password");
+				//no user by that name - generate error message and return to login view
+				return Redirect::route('login')->withErrors($mb);
+			}
 
-			//if not valid 
-			//return to login screen with error message 
-
-		}else{
-
+		} else {
 			//no user by that name - generate error message and return to login view
-			Redirect::route('login');
+
+			// add a message
+			$mb->add("login","Invalid user name or password");
+			return Redirect::route('login')->withErrors($mb);
 		}
 
 		

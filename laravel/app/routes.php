@@ -15,23 +15,20 @@
 require_once('app.php');
 
 
-
+// no filter required here - this is public
 Route::get('/', [ 'as' => 'home' , function()
 {
 	return View::make('home',['title' => 'Home']);
 }]);
 
-Route::get('login', [ 'as' => 'login' , function()
-{
-	return View::make('auth.login',['title' => 'Login']);
-}]);
 
+Route::filter('login' , function(){
 
+	if(!isLoggedIn()) {
+		return Redirect::route('home')->withErrors(message('You need to be logged in to access this information'));
+	}
 
-Route::post('loginValidate',array(
-	'uses' => "LoginController@loginValidate",
-	'as' =>'loginValidate'
-));
+});
 
 
 
@@ -46,10 +43,12 @@ Route::post('loginValidate',array(
 // 	return View::make("authors.index");
 
 // });
-include_once('routes/authors.php');
-include_once('routes/therapists.php');
-include_once('routes/clients.php');
-include_once('routes/appts.php');
+include_once('routes/login.php');
 
+Route::group( ['before'=>'login'] , function() {
+	include_once('routes/therapists.php');
+	include_once('routes/clients.php');
+	include_once('routes/appts.php');
+});
 
 include_once('views/menu.php');
