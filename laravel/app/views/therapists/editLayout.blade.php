@@ -4,8 +4,7 @@
 
 	?>
 	<!-- onSubmit go to therapistSave,and pass in the route to this form (for errors) -->
-	{{ Form::model( $therapist , array('route' => array('therapistSave' , 'therapistEdit' ))) }}
-	
+	{{ Form::model( $therapist , array('route' => array('therapistSave' , 'therapistEdit' ))) }} 
 		<div class='panel'>
 
 			<!-- {{ myLabel('id','ID  :') }} -->
@@ -32,9 +31,18 @@
 
 			{{ myLabel('password_confirmation' , 'Confirm : ') }}
 				{{ Form::input('password','password_confirmation',$therapist->password) }} <br/>
+			
+			<?php 
+				if(isAdmin()) {
+			
+					echo myLabel('isAdmin' , 'Admin ? : ') ;
+					$str = Form::checkbox('isAdmin',$therapist->isAdmin);
+					//echo "<pre>".$str."</pre>";
+						echo $str."<br/>";
 				
-			{{ myLabel('isAdmin' , 'Admin ? : ') }}
-				{{ Form::checkbox('isAdmin',$therapist->isAdmin) }} <br/>
+				}
+
+			?> 	
 				
 
 

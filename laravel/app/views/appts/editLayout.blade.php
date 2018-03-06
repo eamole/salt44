@@ -37,7 +37,9 @@
 		<br clear='all' />
 
 		{{ myLabel('notes' , 'Notes : ') }}
-			{{ Form::textarea('notes', $appt->notes,[ 'class' => 'notes' , 'id' => 'notes' ]) }} <br/>	
+			{{ Form::textarea('notes', $appt->notes,[ 'class' => 'notes' , 'id' => 'notes' ]) }} 
+			<br/>	
+		{{ displayApptTemplates() }}
 
 		<div class="menuBar">
 			

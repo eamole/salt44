@@ -39,7 +39,7 @@ class LoginController extends BaseController {
 		$username=Input::get('username');
 		$user=Therapist::where('username','=',$username)->first();
 		
-		if(!is_null($user)){
+		if(!is_null($user)){	// there is a user object
 			
 			//validate password
 			$password = Input::get('password');

@@ -1,6 +1,9 @@
 /*
   apply some styling to inputs on dataTables
  */
+.mce-container-body {
+  width : 80%;
+}
 
 .dataTable {
   border: 1px solid #4E9CAF;

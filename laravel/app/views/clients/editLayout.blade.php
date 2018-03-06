@@ -7,11 +7,7 @@
 			<!-- {{ myLabel('id','ID  :') }} -->
 			 {{ Form::input('hidden','id' , $client->id , ['readonly'] )  }} 
 			
-<<<<<<< HEAD
-			{{ Form::label('name','Name :',array('class'='label')) }}
-=======
 			{{ myLabel('name','Name :') }}
->>>>>>> e29d018bb0be8def8c855cf5c477b58512ab897f
 			 	{{ Form::text('name',$client->name) }} <br/>
 			
 			{{ myLabel('phone' , 'Phone : ') }}

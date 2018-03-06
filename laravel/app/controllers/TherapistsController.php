@@ -132,6 +132,7 @@ class TherapistsController extends BaseController {
 		$therapist->email	=Input::get('email');
 		$therapist->username=Input::get('username');
 		$therapist->password=Input::get('password');
+		$therapist->isAdmin	=Input::get('isAdmin');
 	
 
 		// validate inputs - cannot pass $therapist
