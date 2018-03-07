@@ -10,7 +10,8 @@ class Therapist  extends Eloquent {
 	protected $fillable = array('id','name','phone','email','username','password','created_at','updated_at');
 
 	public function __construct() {
-		$this->email="something@somewhere.com";
+		// you can assign any default values for a new Therapist here in the constructor
+		// $this->email="something@somewhere.com";
 	}	
 
 	public function clients() {

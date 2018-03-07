@@ -4,7 +4,7 @@
 
 	?>
 	<!-- onSubmit go to therapistSave,and pass in the route to this form (for errors) -->
-	{{ Form::model( $therapist , array('route' => array('therapistSave' , 'therapistEdit' ))) }} 
+	{{ Form::model( $therapist , array('route' => 'therapistSave' )) }} 
 		<div class='panel'>
 
 			<!-- {{ myLabel('id','ID  :') }} -->

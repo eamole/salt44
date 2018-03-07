@@ -1,7 +1,7 @@
 
 
 	<!-- onSubmit go to clientSave,and pass in the route to this form (for errors) -->
-	{{ Form::model( $client , array('route' => array('clientSave' , 'clientEdit' ))) }}
+	{{ Form::model( $client , array('route' => 'clientSave' )) }}
 	
 		<div class='panel'>
 			<!-- {{ myLabel('id','ID  :') }} -->
@@ -32,7 +32,8 @@
 			{{ myLabel('therapist_id' , 'Therapist : ') }}
 				{{ Form::select('therapist_id',$therapists,$client->therapist_id) }} <br/>
 
-			{{ myLabel('username' , 'Login ID : ') }}
+<!--
+ 			{{ myLabel('username' , 'Login ID : ') }}
 				{{ Form::text('username',$client->username) }} <br/>
 
 			{{ myLabel('password' , 'Password : ') }}
@@ -41,7 +42,7 @@
 			{{ myLabel('password_confirmation' , 'Confirm : ') }}
 				{{ Form::input('password','password_confirmation',$client->password) }} <br/>
 
-		</div>
+ -->		</div>
 		
 		<br clear='all' />
 

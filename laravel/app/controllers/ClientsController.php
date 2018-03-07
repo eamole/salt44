@@ -98,21 +98,15 @@ class ClientsController extends BaseController {
 	}
 
 	//need to pass in the View Route to redirect to (return) on fail
-	public function save($route) {
+	public function save() {
 		// the data weare saving must come from the form
 		
-		if($route=="clientAdd") {
-			$rules = array(
-				'name' => 'required|min:5' ,
-				'phone' => 'required|min:5:unique:clients',
-				'email' => 'required|email|unique:clients',
-				'dob' =>  'date',
-				'pps' => 'required|min:8',
-				'therapist_id' =>'required|exists:therapists,id',	
-				'username' => 'required|unique:clients',
-				'password' => 'required|min:8|confirmed'
-			);
-		} else {
+		// create a new Client oject from inputs
+		//$client = new Client(Input::all());
+		if(!empty(Input::get('id'))) {
+
+			$client=Client::find(Input::get('id'));	// load saved data
+
 			//unique constraints not working with edit - finsing the original record!
 			$rules = array(
 				'name' => 'required|min:5' ,
@@ -120,19 +114,31 @@ class ClientsController extends BaseController {
 				'email' => 'required|email',
 				'dob' =>  'date',
 				'pps' => 'required|min:8',
-				'therapist_id' =>'required|exists:therapists,id',	
-				'username' => 'required',
-				'password' => 'required|min:8|confirmed'
+				'therapist_id' =>'required|exists:therapists,id'	
+				// 'username' => 'required',
+				// 'password' => 'required|min:8|confirmed'
 			);
 
-		}
-		// create a new Client oject from inputs
-		//$client = new Client(Input::all());
-		if(!empty(Input::get('id'))) {
-			$client=Client::find(Input::get('id'));
+			$redirectRoute = "clientEdit" ;	// if validation fails
+
 		}
 		else {
-			$client = new Client;
+
+			$client = new Client;	// blank default object
+
+			$rules = array(
+				'name' => 'required|min:5' ,
+				'phone' => 'required|min:5:unique:clients',
+				'email' => 'required|email|unique:clients',
+				'dob' =>  'date',
+				'pps' => 'required|min:8',
+				'therapist_id' =>'required|exists:therapists,id'	
+				// 'username' => 'required|unique:clients',
+				// 'password' => 'required|min:8|confirmed'
+			);
+
+			$redirectRoute = "clientAdd" ;	// if validation fails
+
 		}
 		// update object with changes
 		$client->name	=Input::get('name');
@@ -143,8 +149,8 @@ class ClientsController extends BaseController {
 		$client->dob	=Input::get('dob');
 		$client->therapist_id	=Input::get('therapist_id');
 		$client->notes	=Input::get('notes');
-		$client->username=Input::get('username');
-		$client->password=Input::get('password');
+		// $client->username=Input::get('username');
+		// $client->password=Input::get('password');
 	
 
 		// validate inputs - cannot pass $client
@@ -153,7 +159,7 @@ class ClientsController extends BaseController {
 		if( $validator->fails() ) {
 
 			// redirect to edit/add route with inputs
-			return Redirect::route($route,array($client->id))->withInput()->withErrors($validator);
+			return Redirect::route($redirectRoute,array($client->id))->withInput()->withErrors($validator);
 			
 		} else {
 

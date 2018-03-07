@@ -64,7 +64,7 @@ class TherapistsController extends BaseController {
 	public function edit($id) {
 
 		$therapist = Therapist::find($id); 
-
+		
 		return View::make('therapists.edit',array(
 			'therapist' => $therapist
 		))->with("title","Therapist Edit");	
@@ -96,18 +96,14 @@ class TherapistsController extends BaseController {
 	}
 
 	//need to pass in the View Route to redirect to (return) on fail
-	public function save($route) {
-		// the data weare saving must come from the form
-		
-		if($route=="therapistAdd") {
-			$rules = array(
-				'name' => 'required|min:5' ,
-				'phone' => 'required|min:5:unique:therapists',
-				'email' => 'required|email|unique:therapists',
-				'username' => 'required|unique:therapists',
-				'password' => 'required|min:8|confirmed'
-			);
-		} else {
+	public function save() {
+
+		// create a new Therapist oject from inputs
+		//$therapist = new Therapist(Input::all());
+		if(!empty(Input::get('id'))) {	// ID is set, its an edit
+
+			$therapist=Therapist::find(Input::get('id')); // get the saved data
+
 			//unique constraints not working with edit - finsing the original record!
 			$rules = array(
 				'name' => 'required|min:5' ,
@@ -117,14 +113,22 @@ class TherapistsController extends BaseController {
 				'password' => 'required|min:8|confirmed'
 			);
 
-		}
-		// create a new Therapist oject from inputs
-		//$therapist = new Therapist(Input::all());
-		if(!empty(Input::get('id'))) {
-			$therapist=Therapist::find(Input::get('id'));
+			$redirectRoute = 'therapistEdit';
+
 		}
 		else {
-			$therapist = new Therapist;
+			$therapist = new Therapist; // blank object
+
+			$rules = array(
+				'name' => 'required|min:5' ,
+				'phone' => 'required|min:5:unique:therapists',
+				'email' => 'required|email|unique:therapists',
+				'username' => 'required|unique:therapists',
+				'password' => 'required|min:8|confirmed'
+			);
+
+			$redirectRoute = 'therapistAdd';
+
 		}
 		// update object with changes
 		$therapist->name	=Input::get('name');
@@ -132,15 +136,14 @@ class TherapistsController extends BaseController {
 		$therapist->email	=Input::get('email');
 		$therapist->username=Input::get('username');
 		$therapist->password=Input::get('password');
-		$therapist->isAdmin	=Input::get('isAdmin');
-	
+		$therapist->isAdmin	=Input::has('isAdmin');	// NB has()
 
 		// validate inputs - cannot pass $therapist
 		$validator = Validator::make(Input::all() , $rules );
 
 		if( $validator->fails() ) {
 			// redirect to edit/add route with inputs
-			return Redirect::route($route,array($therapist->id))->withInput()->withErrors($validator);
+			return Redirect::route($redirectRoute,array($therapist->id))->withInput()->withErrors($validator);
 			
 		} else {
 			// write the data back to database
