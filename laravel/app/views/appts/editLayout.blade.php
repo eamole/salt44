@@ -35,11 +35,12 @@
 		</div>
 
 		<br clear='all' />
-
+		<span class='mce_box'>
 		{{ myLabel('notes' , 'Notes : ') }}
 			{{ Form::textarea('notes', $appt->notes,[ 'class' => 'notes' , 'id' => 'notes' ]) }} 
-			<br/>	
-		{{ displayApptTemplates() }}
+
+		</span>
+		{{ TemplatesController::displayAll($appt->id) }}
 
 		<div class="menuBar">
 			
@@ -59,6 +60,7 @@
 	<script type="text/javascript">
 		
 		tinymce.init({
-    		selector: '#notes'
+    		selector: '#notes',
+    		width : "80%"
   		});
 	</script>

@@ -1,19 +1,5 @@
 <?php 
 
-function displayApptTemplates() {
-	$templates = array(
-		"Initial Session" => "/initial_session_template",
-		"Stutter" => "/stutter_treatment"
-
-	);
-
-	$html = "<div> ";
-	foreach ($templates as $title => $template) {
-		$html .= "<div class='label'>$title</div>";
-	}
-	$html .= "</div>";
-	return $html;
-}
 function isLoggedIn() {
 	return Session::has('user');
 

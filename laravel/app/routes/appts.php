@@ -12,6 +12,13 @@ Route::get('appts',array(
 // 	return View::make('appts.appt')->with("title","Appt View")->with("id", $id);	
 // });
 
+
+Route::get('templates/insertTemplate/{apptId}/{templateId}',array(
+	'uses' => "TemplatesController@insertTemplate",
+	'as' =>'apptInsertTemplate'
+));
+
+
 Route::get('appt/display/{id}',array(
 	'uses' => "ApptsController@display",
 	'as' =>'apptDisplay'

@@ -5,6 +5,14 @@
   width : 80%;
 }
 
+.mce_box {
+  float:left;
+  width:80%;
+}
+.templates_bar {
+  float:right;
+}
+
 .dataTable {
   border: 1px solid #4E9CAF;
   border-radius: 5px;

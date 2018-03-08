@@ -87,11 +87,12 @@ class ApptsController extends BaseController {
 		)->with("title","Appointment Edit");	
 	}
 
-	// $id is optiona. If provided, use the client and patient ids
+
+	// $id is optiona. If provided, use the client and patient ids from previous appointment
 	public function add($id=null) {
 		
 		$appt = new Appt;
-		// copy details from this id to new id
+		// copy details from this appointment to new appointment
 		if(!empty($id)) {
 			$old = Appt::findOrFail($id);
 			$appt->client_id = $old->client_id;
@@ -116,6 +117,15 @@ class ApptsController extends BaseController {
 			'therapists' 	=> $therapists,
 			'clients' 		=> $clients,
 		))->with("title","Appointment Add");	
+	}
+
+	public static function insertTemplate($apptId,$template) {
+		$appt = Appt::findOrFail($apptId);
+		
+		$appt->notes = "<br><hr> " . $template .   "<br><hr>" . $appt->notes;
+
+		$appt->save();
+
 	}
 
 	public function addFromClient($id) {
