@@ -40,7 +40,13 @@
 			{{ Form::textarea('notes', $appt->notes,[ 'class' => 'notes' , 'id' => 'notes' ]) }} 
 
 		</span>
-		{{ TemplatesController::displayAll($appt->id) }}
+
+		<?php
+			if(!is_null($appt->id)){
+				echo TemplatesController::displayAll($appt->id);
+			}
+
+		?>
 
 		<div class="menuBar">
 			

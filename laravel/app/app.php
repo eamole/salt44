@@ -1,4 +1,8 @@
 <?php 
+function google_key(){
+	return 'AIzaSyBUZ_GJn0GAwCs45ckCtPkMTmRnBMf0oPA';
+}
+
 
 function isLoggedIn() {
 	return Session::has('user');

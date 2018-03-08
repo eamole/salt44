@@ -30,6 +30,11 @@ Route::filter('login' , function(){
 
 });
 
+Route::get('googleMap',[ 'as' => 'googleMap', function(){
+
+	return View::make('googleMap', [ 'title' => 'Where we are']);
+}]);
+
 
 
 // Route::get('authors', function()
