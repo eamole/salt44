@@ -1,7 +1,7 @@
 <?php 
 function google_key(){
-	return 'AIzaSyBUZ_GJn0GAwCs45ckCtPkMTmRnBMf0oPA';
-}
+	return 'AIzaSyCDbA9xjzNl7GHZYWvCivfhDhEYM8cZoVI';
+}  
 
 
 function isLoggedIn() {

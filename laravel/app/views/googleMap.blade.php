@@ -11,13 +11,13 @@
 
         // Create a map object and specify the DOM element for display.
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
+          center: {lat: -51.8987311, lng: -8.471564899999999},
           zoom: 8
         });
       }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key='{{google_key()}}'&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key={{google_key()}}&callback=initMap"
     async defer></script>
 
 @stop
