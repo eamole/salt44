@@ -3,14 +3,17 @@
  */
 .mce-container-body {
   width : 80%;
+  display: inline-block;
 }
 
 .mce_box {
   float:left;
   width:80%;
+  display:inline-block;
 }
 .templates_bar {
   float:right;
+  display: inline-block;
 }
 
 .dataTable {

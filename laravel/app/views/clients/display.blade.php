@@ -12,6 +12,7 @@
 		{{ HTML::linkRoute('clientDelete','Delete Client',$client->id , ['class' => 'button']) }}
 		{{ HTML::linkRoute('clientDisplayAppts','Show Appointments',$client->id , ['class' => 'button']) }}
 		{{ HTML::linkRoute('apptAddFromClient','Book Appointment',$client->id , ['class' => 'button']) }}
+		{{ HTML::linkRoute('questionnairesDisplayAll','Questionnaires',$client->id,  ['class' => 'button']) }}		
 		{{ HTML::linkRoute('clientsDisplayAll','Cancel' , null , ['class' => 'button']) }}
 	</div>
 
