@@ -3,7 +3,39 @@
 <head>
 	<title>{{ $title }}</title>
 
+	  <meta name="viewport" content="initial-scale=1.0">
+	    <meta charset="utf-8">
+	    <style>
+	      /* Always set the map height explicitly to define the size of the div
+	       * element that contains the map. */
+	      #myGoogleMap, #myGoogleMapContainer {
+	        height: 500px;
+	        width:100%;
+	      }
+	      /* Optional: Makes the sample page fill the window. */
+	      html, body {
+	        height: 100%;
+	        margin: 0;
+	        padding: 0;
+	      }
+	    </style>
+
+    <script>
+    	var map;
+		function myGoogleMap() {
+			console.log("Loading Google map from Callback");
+			var el = document.getElementById('myGoogleMap');
+			// Create a map object and specify the DOM element for display.
+			map = new google.maps.Map(el, {
+			  center: {lat: 51.898731, lng: -8.471564},
+			  zoom: 18
+			});
+		}
+
+    </script>
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 
 	{{ HTML::style('css/style.css') }}
 
@@ -12,8 +44,11 @@
 
 </head>
 <body>
+
+
 	
 	<h1>Speech & Language Therapy System</h1>
+
 
 	{{ $menuBar->asUl(['class' => 'menuBar']) }} 
 
