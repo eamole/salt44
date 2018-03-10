@@ -9,6 +9,7 @@ class Question {
 
 	public $questionnaire;	// the questionnaire object (parent)
 	public $id;
+	public $section;
 	public $label;	// this will be the label
 	public $type;	// this is the input type - one of types
 	public static $types = ['text','password','email','file','checkbox','radio','number','select','selectRange','selectMonth']; 
@@ -28,6 +29,7 @@ class Question {
 	function __construct($questionnaire,$id) {
 		$this->id=$id;
 		$this->questionnaire = $questionnaire;
+		$this->section = $this->questionnaire->current_section;
 	}
 
 	/*
@@ -132,8 +134,15 @@ class Question {
 		render this into the view
 	 */
 	public function render() {
+		$html="";
+		if(!empty($this->section)) {
+			$html .= "<h4>".$this->section['title'] . "</h4>";
+		}
+		if(!empty($this->section) && isset($this->section['subtext'])) {
+			$html .= "<h5>".$this->section['subtext'] . "</h5>";
+		}
 		
-		$html = myLabel($this->html_id() , $this->label , $this->attribs);
+		$html .= myLabel($this->html_id() , $this->label , $this->attribs);
 
 		if($this->type=='checkbox') {
 			$index = 1;
@@ -161,6 +170,22 @@ class Question {
 			}
 			$html .= Form::select($this->html_id(),$options);
 		}
+		/*
+			This is a fudge
+			each value is actually a question!!
+		 */
+		if($this->type=='scale') {
+			$options=[];
+			$index=0;
+			// now display the scale values!!
+			for($i=1;$i<=5;$i++) {
+				// use index for the id
+				$html .= Form::label($this->html_id($index) , $i );
+				$html .= Form::radio($this->html_id() , $i, null,array("id" => $this->html_id($index++)));
+
+			}				
+		}
+
 		if($this->type=='text') {
 			$html .= Form::text($this->html_id(),$this->value);			
 		}
@@ -170,12 +195,38 @@ class Question {
 		if($this->type=='email') {
 			$html .= Form::email($this->html_id(),$this->value);			
 		}
-		if($this->type=='date') {
-			$html .= Form::input('date' , $this->html_id(),$this->value);			
-		}
 		if($this->type=='password') {
 			$html .= Form::password($this->html_id(),$this->value);			
 		}
+		if($this->type=='date') {
+			$html .= Form::input('date',$this->html_id(),$this->value);			
+		}
+		if($this->type=='time') {
+			$html .= Form::input('time',$this->html_id(),$this->value);			
+		}
+		if($this->type=='color') {
+			$html .= Form::input('color',$this->html_id(),$this->value);			
+		}
+		if($this->type=='month') {
+			$html .= Form::input('month',$this->html_id(),$this->value);			
+		}
+		if($this->type=='week') {
+			$html .= Form::input('week',$this->html_id(),$this->value);			
+		}
+		if($this->type=='range') {
+			$html .= Form::input('range',$this->html_id(),$this->value);			
+		}
+		if($this->type=='url') {
+			$html .= Form::input('url',$this->html_id(),$this->value);			
+		}
+		if($this->type=='tel' || $this->type=='phone' ) {
+			$html .= Form::input('tel',$this->html_id(),$this->value);			
+		}
+		if($this->type=='textarea') {
+			$html .= Form::textarea($this->html_id(),$this->value);			
+		}
+
+
 
 		return $html;
 	}

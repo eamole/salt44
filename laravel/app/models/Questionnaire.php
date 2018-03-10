@@ -17,16 +17,23 @@ class Questionnaire {
 	/*
 		This should be a json like structure. We will move this to a file later.
 	 */
-	public static $questionnaires=[
-		'1' => [ 'title' => 'Initial Questionaire' ] ,
-		'2' => [ 'title' => 'Follow Up Questionnaire']
-	];
-
+	// public static $questionnaires=[
+	// 	'1' => [ 'title' => 'Initial Questionaire' ] ,
+	// 	'2' => [ 'title' => 'Follow Up Questionnaire'],
+	// 	'3' => [ 'title' => 'Scale']
+	// ];
+	// list of all questionnaires
+	public static $questionnaires=[];
 	public $clientId;
 	public $client;
 	public $id;
 	public $title;
 	public $questions=[];	// array of Question objects
+
+	// questions can be attached to sections. All a section has is a header?
+	public $sections=[];
+	public $current_section;
+	public $current_section_id=0;
 
 	public $current_id;
 	public $previous_id;	// the last question
@@ -34,20 +41,75 @@ class Questionnaire {
 
 
 	public static $load_questions;	// questions loaded from include file
+	
+	public static $this_questionnaire;	// the current questionnaire being defined
 
+	public function __construct($id,$title) {
+		
+		// bind the questionnaire to the client
+		$this->client = Session::get("client");
+		$this->id=$id;
+		$this->title=$title;
+
+		// I should now load the questions?
+		// $this->load();
+	}
+	/*
+		this is the "constructor" called from the questionnaire def file
+	 */
+	public static function init($id,$title) {
+		// !!! Make sure a client has been selected into Session
+		$q = new Questionnaire($id,$title);
+		self::$this_questionnaire=$q;
+		self::$questionnaires[$id] = $q;
+		return $q;
+	}
+	/*
+	
+		allow each question to be attached to a section - maybe repeat the section
+		for each question
+
+	 */
+	public function section($title,$subtext=null) {
+		$this->current_section = ['title' => $title , 'subtext' => $subtext ];
+		$this->section[ ++$this->current_section_id ] = $this->current_section ;	//pre increment
+		return $this;
+	}
+
+	public function questions($questions) {
+
+		foreach($questions as $id => $question ) {
+			// echo "Question " ;
+			$this->questions[$id] = Question::init($this,$id,$question);
+		}
+
+		return $this;
+
+	}
+	/*
+		this now scans the questionnaires folder
+	 */
 	public static function loadQuestionnaires() {
 
-		$questionnaires = [];
-		foreach (self::$questionnaires as $id => $jsonQuestionnaire) {
-			$questionnaire = new Questionnaire($id,$jsonQuestionnaire['title']);
-			$questionnaires[$id] = $questionnaire;
+		$path = app_path() ."/questionnaires/"; 
+		$files = glob($path . "*.php");
+		foreach ($files as $file) {
+			include($file);
 		}
-		return $questionnaires;
+		return self::$questionnaires;
 	}		
 
 	public static function get($id) {
-		$q = new Questionnaire($id,self::$questionnaires[$id]['title']);
-		$q->load();
+		// $q = new Questionnaire($id,self::$questionnaires[$id]['title']);
+		// $q->load();
+		$path = app_path() ."/questionnaires/"; 
+		$path = $path.$id.".php";
+		// I need to run the file and capture the output
+		
+		include($path);
+
+		$q=self::$this_questionnaire;
+
 		return $q;
 	}
 
@@ -80,17 +142,10 @@ class Questionnaire {
 		return $first_question==$this->current_question;
 	}
 
-	public function __construct($id,$title) {
-		
-		// bind the questionnaire to the client
-		$this->client = Session::get("client");
-		$this->id=$id;
-		$this->title=$title;
-
-		// I should now load the questions?
-		// $this->load();
-	}
-	public function load() {
+	/*
+		old load
+	 */
+	public function old_load() {
 
 		$path = app_path() ."/questionnaires/"; 
 		$path = $path.$this->id.".php";
@@ -169,6 +224,15 @@ class Questionnaire {
 	    return $result;
 	}	
 
+	public static function old_loadQuestionnaires() {
+
+		$questionnaires = [];
+		foreach (self::$questionnaires as $id => $jsonQuestionnaire) {
+			$questionnaire = new Questionnaire($id,$jsonQuestionnaire['title']);
+			$questionnaires[$id] = $questionnaire;
+		}
+		return $questionnaires;
+	}		
 
 
 }

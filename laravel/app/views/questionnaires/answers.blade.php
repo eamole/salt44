@@ -19,7 +19,20 @@
 			</thead>
 
 			<tbody>
+				<?php
+					$section_title = "";
+				?>
 				@foreach( $questionnaire->questions as $id => $question )
+					@if($section_title !== $question->section['title'])
+						<tr class="section">
+							<td colspan='3'>
+								<?php 
+									$section_title = $question->section['title'];
+								?>
+								{{ $section_title }}
+							</td>
+						</tr>
+					@endif
 					<tr>
 						<td>
 							 {{ $question->id }}

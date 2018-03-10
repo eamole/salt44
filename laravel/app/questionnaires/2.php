@@ -1,6 +1,7 @@
 <?php
 
-Questionnaire::$load_questions = [
+Questionnaire::init('2','Follow Up Survey')
+->questions([
 
 	"1" => [
 			'label' => "Date of Birth ",
@@ -28,4 +29,4 @@ Questionnaire::$load_questions = [
 			'values' => ["Student","Working fulltime","Working part time","Unemployed","Retired"]
 		]
 
-];
+]);

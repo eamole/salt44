@@ -1,10 +1,11 @@
 <?php
 
-Questionnaire::$load_questions = [
+Questionnaire::init("1","Initial Questionnaire")
+->questions([
 
 	"1" => [
 			'label' => "Date of Birth ",
-			'type' => "number"
+			'type' => "date"
 		],
 	"2" => [
 			'label' => "Your GPs name" ,
@@ -27,5 +28,5 @@ Questionnaire::$load_questions = [
 			'type' => "radio" ,
 			'values' => ["Student","Working fulltime","Working part time","Unemployed","Retired"]
 		]
-
-];
+		
+]);

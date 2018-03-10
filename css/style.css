@@ -1,3 +1,13 @@
+/* question section heading */
+h4 {
+  border: 1px solid #4E9CAF;
+  border-radius: 5px;
+  padding : 5px;
+  background-color: #8FBC8F ;
+}
+
+
+
 /*
   apply some styling to inputs on dataTables
  */
@@ -239,3 +249,15 @@ th.bio {
 	width: 60%;
 }
 
+
+
+/* fix up alignment of radio buttons */
+label {
+  margin : 5px ;
+}
+input {
+  vertical-align : middle;
+}
+tr.section {
+  background-color: #cce0ff !important ;  
+}
