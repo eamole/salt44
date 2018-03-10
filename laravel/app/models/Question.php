@@ -10,11 +10,12 @@ class Question {
 	public $questionnaire;	// the questionnaire object (parent)
 	public $id;
 	public $section;
-	public $label;	// this will be the label
-	public $type;	// this is the input type - one of types
+	public $params=[];		// settings
+	public $label;			// this will be the label
+	public $type;			// this is the input type - one of types
 	public static $types = ['text','password','email','file','checkbox','radio','number','select','selectRange','selectMonth']; 
 
-	public $defaultValue;
+	public $default;
 	public $attribs=[];		// for html
 	public $value;			// input value - maybe multiple eg multi select
 	public $values=[];		// for select, checkboxes and radios
@@ -26,42 +27,46 @@ class Question {
 
 	public static $jsonQuestion;	// a holder for  question while
 
-	function __construct($questionnaire,$id) {
-		$this->id=$id;
-		$this->questionnaire = $questionnaire;
-		$this->section = $this->questionnaire->current_section;
+	function __construct($questionnaire,$id,$params) {
+		$this->id 				= $id;
+		$this->questionnaire 	= $questionnaire;
+		$this->section 			= $this->questionnaire->current_section;
+		$this->params 			= $params;
+
+		$this->label 		= $this->param('label');
+		$this->type 		= $this->param('type','text');
+		$this->scale 		= $this->param('scale');
+		$this->values 		= $this->param('values');
+		$this->multiple		= $this->param('multiple',false);
+		$this->text_after 	= $this->param('text_after');
+		$this->help_text 	= $this->param('help_text');
+		$this->rules 		= $this->param('rules');
+		$this->default 		= $this->param('default');
+
 	}
 
 	/*
 		no longer using json - just php arrays
 	 */
-	public static function init($questionnaire,$id,$json) {
+	public static function init($questionnaire,$id,$params) {
 		
-		self::$jsonQuestion = $json;
+		$q = new Question($questionnaire,$id,$params);
 
-		$q = new Question($questionnaire,$id);
-
-		$q->label 	= self::get('label');
-		$q->type 	= self::get('type','text');
-		$q->values 	= self::get('values');
-		$q->multiple= self::get('multiple',false);
-		$q->text_after 	= self::get('text_after');
-		$q->help_text 	= self::get('help_text');
-		$q->rules 	= self::get('rules');
 		return $q;
 
 	}
-	public static function get($field,$default=null) {
-		if(isset(self::$jsonQuestion[$field])) {
-			$value = self::$jsonQuestion[$field];
+	public function param($field,$default=null) {
+
+		if(isset($this->params[$field])) {
+			$value = $this->params[$field];
 		} else {
-			$value = $default;
+			//see if the section has a default value set
+			if(isset($this->section[$field])) {
+				$value = $this->section[$field];
+			} else {
+				$value = $default;
+			}
 		}
-		// if(!is_array($value)) {
-		// 	echo "$field : $value <br/>";
-		// }else{
-		// 	echo "$field : array <br/>";
-		// }
 		return $value;
 
 	}
@@ -139,8 +144,6 @@ class Question {
 	public function render() {
 
 		$html="<h3>Q.".$this->id." of ".$this->questionnaire->count()."</h3>";
-
-
 		
 		if(!empty($this->section)) {
 			$html .= "<h4>".$this->section['title'] . "</h4>";
@@ -149,11 +152,17 @@ class Question {
 			$html .= "<h5>".$this->section['subtext'] . "</h5>";
 		}
 		
+		if(is_null($this->value)) {
+			if($this->default) {
+				$this->value = $this->default;
+			}
+		}
+
 		/*
 			need a div to wrap around the label and the values 
 			if values is an array
 		 */ 
-		$html .= myLabel($this->html_id() , $this->label , $this->attribs);
+		$html .= myLabel($this->html_id() , $this->label );
 
 		if($this->type=='checkbox') {
 			$index = 1;
@@ -207,7 +216,6 @@ class Question {
 				$html .= "</div>";
 			}				
 		}
-
 		if($this->type=='text') {
 			$html .= Form::text($this->html_id(),$this->value);			
 		}

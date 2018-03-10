@@ -29,6 +29,7 @@ class Questionnaire {
 	public $id;
 	public $title;
 	public $questions=[];	// array of Question objects
+	public $next_question_id=0;	// pre incr
 
 	// questions can be attached to sections. All a section has is a header?
 	public $sections=[];
@@ -70,17 +71,18 @@ class Questionnaire {
 		for each question
 
 	 */
-	public function section($title,$subtext=null) {
-		$this->current_section = ['title' => $title , 'subtext' => $subtext ];
+	public function section($params) {
+
+		$this->current_section = $params ;
 		$this->section[ ++$this->current_section_id ] = $this->current_section ;	//pre increment
 		return $this;
 	}
 
 	public function questions($questions) {
-
-		foreach($questions as $id => $question ) {
-			// echo "Question " ;
-			$this->questions[$id] = Question::init($this,$id,$question);
+		foreach($questions as $question ) {
+			// pre increment id
+			$this->questions[++$this->next_question_id] = 
+				Question::init($this,$this->next_question_id,$question);
 		}
 
 		return $this;

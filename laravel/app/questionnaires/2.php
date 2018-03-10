@@ -1,32 +1,83 @@
 <?php
 
-Questionnaire::init('2','Follow Up Survey')
+Questionnaire::init('2','SALT Referral Questionnaire ')
+->section([
+	'title' => "General Information",
+	'rules' => 'required'
+])
 ->questions([
+	[	'label' => "Todays Date ",
+		'type' => "date",
+		'default' => date('d/m/Y', time())
+	],
+	[	'label' => "Child's name" ,
+		'type' => "text"
+	],
+	[	'label' => "Date of Birth" ,
+		'type' => 'date'
+	]
+])
+->section([
+	'title' => 'Parent/Guardian Details',
+])
+->questions([
+	[	'label' => "Names" ,
+		'type' => "text"
+	],
+	[	'label' => "Address" ,
+		'type' => "textarea" 
+	],	
+	[	'label' => "Home Phone " ,
+		'type' => "phone" 
+	],
+	[	'label' => "Work Phone " ,
+		'type' => "phone" 
+	],
+	[	'label' => "Mobile Phone " ,
+		'type' => "phone" 
+	],
+	[	'label' => "Email Address " ,
+		'type' => "email" 
+	],
+	[	'label' => "Whoe Referred Your Child" ,
+		'type' => "radio",
+		'values' => ['School','GP','Specialist','Self','Hospital']
+	]
+])
+->section([
+	'title' => 'Developmental and Medial History',
+])
+->questions([
+	[	'label' => "Describe your childs birth history. List any complications during pergnancy, birth or infancy" ,
+		'type' => "textarea"
+	],
+	[	'label' => "Describe any developmental challenges your child has faced or continues to face" ,
+		'type' => "textarea"
+	],
+	[	'label' => "Does your child have a history of ear infections? How frequently and how has it been treated medically?" ,
+		'type' => "textarea"
+	],
 
-	"1" => [
-			'label' => "Date of Birth ",
-			'type' => "number"
-		],
-	"2" => [
-			'label' => "Your GPs name" ,
-			'type' => "text"
-		],
-	"3" => [
-			'label' => "Symptoms" ,
-			'type' => "checkbox",
-			'values' => [ "Ringing in ears" , "Stammer", "Dry Mouth" , "Panic"],
-			'multiple' => true
+])
+->section([
+	'title' => 'Developmental Milestones',
+	'subtext' => " Please give approximate ages when your child accomplished major developmental milestones",
 
-		],
-	"4" => [
-			'label' => "Who referred you" ,
-			'type' => "select",
-			'values' => [ "GP" , "Self" , "Hospital" , "School"]
-		],
-	"5" => [
-			'label' => "Occupation" ,
-			'type' => "radio" ,
-			'values' => ["Student","Working fulltime","Working part time","Unemployed","Retired"]
-		]
-
+])
+->questions([
+	[	'label' => "Sitting independently" ,
+		'type' => "number",
+	],
+	[	'label' => "Crawling" ,
+		'type' => "number",
+	],
+	[	'label' => "Walking" ,
+		'type' => "number",
+	],
+	[	'label' => "Reaching" ,
+		'type' => "number",
+	],
+	[	'label' => "Talking" ,
+		'type' => "number",
+	]
 ]);
