@@ -12,31 +12,37 @@ Questionnaire::init('3','Scale Survey')
 
 	"1" => [
 			'label' => "Diarrhoea" ,
+			'rules' => "required",			
 			'type' => "scale" ,
 			'scale' => [1,5]
 		],
 	"2" => [
 			'label' => "Stomach Ache" ,
+			'rules' => "required",
 			'type' => "scale" ,
 			'scale' => [1,5]
 		],
 	"3" => [
 			'label' => "Vomiting" ,
+			'rules' => "required",
 			'type' => "scale" ,
 			'scale' => [1,5]
 		],
 	"4" => [
 			'label' => "Headache" ,
+			'rules' => "required",
 			'type' => "scale" ,
 			'scale' => [1,5]
 		],
 	"5" => [
 			'label' => "Constipation" ,
+			'rules' => "required",
 			'type' => "scale" ,
 			'scale' => [1,5]
 		],
 	"6" => [
 			'label' => "Ear Ache" ,
+			'rules' => "required",
 			'type' => "scale" ,
 			'scale' => [1,5]
 		]

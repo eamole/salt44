@@ -113,6 +113,10 @@ class Questionnaire {
 		return $q;
 	}
 
+	public function count() {
+		return count($this->questions);
+	}
+
 	public function start() {
 		$this->current_id=1;
 		$this->previous_id=null;

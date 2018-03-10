@@ -62,3 +62,13 @@
 		</div>
 
 	{{ Form::close() }}
+	
+	{{ HTML::script('js/tinymce/js/tinymce/tinymce.js') }}
+
+	<script type="text/javascript">
+		
+		tinymce.init({
+    		selector: '#notes',
+    		width : "80%"
+  		});
+	</script>

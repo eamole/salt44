@@ -261,3 +261,15 @@ input {
 tr.section {
   background-color: #cce0ff !important ;  
 }
+
+div.value_container {
+  display : inline-block;
+  border: 1px solid #4E9CAF;
+  border-radius: 5px;
+  padding : 5px;
+  /*background-color: #8FBC8F ;*/
+ 
+}
+span.timestamp {
+  float:right;
+}

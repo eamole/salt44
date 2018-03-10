@@ -8,7 +8,8 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan='3'>Answers for Client : {{ $questionnaire->client->name }}</th>
+					<th colspan='3'>Answers for Client : {{ $questionnaire->client->name }} 
+						<span class="timestamp">Date : {{ date('d M Y h:i:s a', time()) }} </span></th>
 				</tr>
 
 				<tr>

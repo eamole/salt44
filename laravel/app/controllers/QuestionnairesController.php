@@ -74,6 +74,15 @@ class QuestionnairesController extends BaseController {
 
 		// validate the value using the laravel rules
 
+		if($question->rules) {
+			if(!is_array($question->rules)) $question->rules=[ $question->html_id() => $question->rules ];
+			$validator = Validator::make( Input::all() , $question->rules );
+			if( $validator->fails() ) {
+				return Redirect::route('questionnaireQuestion' , array($questionnaire->id))
+					->withErrors($validator)
+					->withInput();
+			}
+		}
 		
 		// next - determine the next question to ask 
 		$question->next();
@@ -100,10 +109,20 @@ class QuestionnairesController extends BaseController {
 		
 		// I should probably save the questions and answers 
 		// into the Client Notes!!
+		// 
+		$view = View::make('questionnaires.answers',array(
+					'questionnaire' => $questionnaire 
+					))->with("title",$questionnaire->title);
 
-		return View::make('questionnaires.answers',array(
-			'questionnaire' => $questionnaire 
-		))->with("title",$questionnaire->title);
+		// note : this is the entre page including menu
+		$sections = $view->renderSections();
+		$section = $sections['content'];
+		
+		// insert the answers into the top of the notes - need a p tag to allow insert
+		$questionnaire->client->notes ="<p/><hr/>" . $section . "<br/><hr/>" . $questionnaire->client->notes;
+		$questionnaire->client->save();
+
+		return $view;
 
 
 	}

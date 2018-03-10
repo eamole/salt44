@@ -106,6 +106,7 @@ class Question {
 		
 		$values=[];
 		if($this->type=='checkbox') {
+			if(empty($this->value)) $this->value=[];	// trap no data
 			// we actually want the labels!!
 			foreach ($this->value as $value) {
 				$values[] = $this->values[$value];
@@ -114,7 +115,9 @@ class Question {
 		}
 
 		if($this->type=='radio') {
-			$this->value=$this->values[$this->value];	// label
+			if($this->value){	// trap empty values 
+				$this->value=$this->values[$this->value];	// label
+			}
 		}
 
 		if($this->type=='select') {
@@ -134,7 +137,11 @@ class Question {
 		render this into the view
 	 */
 	public function render() {
-		$html="";
+
+		$html="<h3>Q.".$this->id." of ".$this->questionnaire->count()."</h3>";
+
+
+		
 		if(!empty($this->section)) {
 			$html .= "<h4>".$this->section['title'] . "</h4>";
 		}
@@ -142,23 +149,35 @@ class Question {
 			$html .= "<h5>".$this->section['subtext'] . "</h5>";
 		}
 		
+		/*
+			need a div to wrap around the label and the values 
+			if values is an array
+		 */ 
 		$html .= myLabel($this->html_id() , $this->label , $this->attribs);
 
 		if($this->type=='checkbox') {
 			$index = 1;
 			foreach($this->values as $key => $value) {
+				$html .= "<div class='value_container'>";
+
 				$html .= Form::label($this->html_id($index) , $value , $this->attribs);
 				// name is common to all values,id is unique to use label as click region
 				$html .= Form::checkbox($this->html_id()."[]",$key,null,array("id" => $this->html_id($index++)));
+
+				$html .= "</div>";
 			}
 		}
 		// radio buttons MUST use the same name for each element
 		if($this->type=='radio') {
 			$index = 1;
 			foreach($this->values as $key => $value) {
+				$html .= "<div class='value_container'>";
+
 				$html .= Form::label($this->html_id($index) , $value , $this->attribs);
 				// name is common to all values,id is unique to use label as click region
 				$html .= Form::radio($this->html_id(),$key,null,array("id" => $this->html_id($index++)));
+
+				$html .= "</div>";
 			}
 		}
 
@@ -179,10 +198,13 @@ class Question {
 			$index=0;
 			// now display the scale values!!
 			for($i=1;$i<=5;$i++) {
+				$html .= "<div class='value_container'>";
+
 				// use index for the id
 				$html .= Form::label($this->html_id($index) , $i );
 				$html .= Form::radio($this->html_id() , $i, null,array("id" => $this->html_id($index++)));
 
+				$html .= "</div>";
 			}				
 		}
 
