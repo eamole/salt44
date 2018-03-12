@@ -263,8 +263,14 @@ class Question {
 				$html .= Form::textarea($this->html_id(),$this->value);
 			$html .= "</div>";
 			// use values as strings to paste into the notes - needs js
+
 			if(isset($this->values)) {
-				
+				$html .="<div class='snippets'><span class='snippets'>Snippets</span>";
+				$html .= "<ul class='snippets'>";
+				foreach ($this->values as $key => $value) {
+					$html .= "<li class='snippet'>$value</li>";
+				}
+				$html .= "</ul></div>";
 			}
 		}
 		if($this->type=='boolean') {

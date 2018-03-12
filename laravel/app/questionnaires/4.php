@@ -6,6 +6,14 @@ Questionnaire::init('4','Test Jumping')
 		'type' => 'date' ,
 		'default' => 'today'
 	],
+	[	'label' => "Describe your childs birth history. List any complications during pergnancy, birth or infancy" ,
+		'type' 	=> "textarea",
+		'values' => ['Measles','Mumps','Placenta Previa']
+	],
+	[	'label' => "Describe any developmental challenges your child has faced or continues to face" ,
+		'type' => "textarea" ,
+		'values' => ['Dyslexia']
+	],	
 	[	'label' => "Does your child have a history of ear infections?",
 		'type' => 'boolean',
 		'next' => [ "if_is"  , 'No'  , "x" ]

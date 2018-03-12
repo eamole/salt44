@@ -46,7 +46,7 @@ Questionnaire::init('2','SALT Referral Questionnaire ')
 	]
 ])
 ->section([
-	'title' => 'Developmental and Medial History',
+	'title' => 'Developmental and Medical History',
 ])
 ->questions([
 	[	'label' => "Describe your childs birth history. List any complications during pergnancy, birth or infancy" ,

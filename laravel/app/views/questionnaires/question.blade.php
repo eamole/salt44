@@ -70,6 +70,16 @@
     		display:"inline-block"
 
   		});
+		document.addEventListener("DOMContentLoaded", function(event) {
+	  		$(".snippet").click(function(e){
+	  			debugger;
+	  			var el = e.target;
+	  			var xhtml = tinymce.activeEditor.getContent();
+	  			var html = xhtml + "<span class='snippet'>" + el.innerText + "</span>";
+	  			tinymce.activeEditor.setContent(html);
+	  		});
+		});
+
 	</script>		
 
 @stop

@@ -7,12 +7,47 @@ h4 {
 }
 
 
+div.snippets {
+  display : inline-block;
+  vertical-align: top;
+}
+
+
+span.snippets {
+  display:block;
+  border: 1px solid #4E9CAF;
+  border-radius: 5px;
+  padding : 5px;
+  background-color: #8FBC8F ;  
+}
+
+ul.snippets {
+  display : inline-block;
+  vertical-align: top;
+  list-style-type: none;
+}
+
+li.snippet {
+    background: #4E9CAF;
+    margin : 5px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    vertical-align : top ;
+    line-height: inherit;
+    cursor : pointer ;
+
+}
+
+
 
 .notes-mce {
   display:inline-block;
 }
 .question-mce {
-  width : 80%;
+  width : 60%;
 }
 
 
