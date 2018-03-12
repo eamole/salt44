@@ -334,7 +334,7 @@ Questionnaire::init('2','SALT Referral Questionnaire',__FILE__)
 	[	'label' => "Able to perform sequential tasks" 		],
 	[	'label' => "Jumps" 		],
 	[	'label' => "Plays on playground equipment" 		],
-	[	'label' => "Swings" 		],
+	[	'label' => "Plays on Swings" 		],
 	[	'label' => "Enjoys roughhouse type play" ],
 	[	'label' => "Takes risks" 		],
 	[	'label' => "Seems aware of safety concerns" ]
