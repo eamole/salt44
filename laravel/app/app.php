@@ -1,4 +1,9 @@
-<?php 
+<?php
+
+function yesNo($bool) {
+	return ($bool ? "Yes" : "No" );
+}
+
 /*
 	don't know what namesapce this is in!!
  */

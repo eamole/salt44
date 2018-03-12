@@ -14,17 +14,11 @@
 
 class Questionnaire {
 
-	/*
-		This should be a json like structure. We will move this to a file later.
-	 */
-	// public static $questionnaires=[
-	// 	'1' => [ 'title' => 'Initial Questionaire' ] ,
-	// 	'2' => [ 'title' => 'Follow Up Questionnaire'],
-	// 	'3' => [ 'title' => 'Scale']
-	// ];
 	// list of all questionnaires
 	public static $questionnaires=[];
-	public $clientId;
+
+	public $isSavedToClient = false;
+
 	public $client;
 	public $path;
 	public $id;
@@ -65,11 +59,86 @@ class Questionnaire {
 	 */
 	public static function init($id,$title,$path) {
 		// !!! Make sure a client has been selected into Session
+		// 
+		// I really could restore a saved version easily here!!
 		$q = new Questionnaire($id,$title,$path);
 		self::$this_questionnaire=$q;
 		self::$questionnaires[$id] = $q;
 		return $q;
 	}
+	/*
+		load them from the folder - 
+	 */
+	public static function loadQuestionnaires() {
+
+		$path = app_path() ."/questionnaires/"; 
+		$files = glob($path . "*.php");
+		foreach ($files as $file) {
+			include($file);
+			/*
+				we can now determine if there is a saved version on client
+			*/
+			if(self::$this_questionnaire->isSavedToClient()) {
+				$q = self::$this_questionnaire->loadFromClient();
+				$q->isSavedToClient=true;
+				self::$this_questionnaire = $q;
+				self::$questionnaires[$q->id]=$q;	// should replace
+			}
+		}
+		Session::put("questionnaires" , self::$questionnaires );
+		return self::$questionnaires;
+	}		
+
+	/*
+		the name of the file used to save a questionnaire for a client
+	 */
+	public function filenameSaveToClient($includePath=false) {
+		// really should have this stored in the QuestionnaireContrller object
+		// and persisted
+		$path = ($includePath) ? $path = storage_path() ."/questionnaires/" : "" ;		
+		return 	$path . 
+				$this->client->name . 
+				"." . 
+				$this->title . 
+				".save";
+	}
+	/*
+		this will save 
+	 */
+	public function saveToClient() {
+		
+		$path = $this->filenameSaveToClient(true) ;
+		$this->isSavedToClient = true;
+		$data = serialize($this);
+		$dir='';
+		$parts = explode('/', $path);
+		$filename = array_pop($parts);	// lose the filename
+        foreach($parts as $part) {
+            if (! is_dir($dir .= "{$part}/")) mkdir($dir);
+        }
+
+		file_put_contents($path , $data );
+
+	}
+	public function isSavedToClient() {
+		$filename = $this->filenameSaveToClient(true) ;
+		return file_exists($filename);
+	}
+	/*
+		I need the original blank object first
+	 */
+	public function loadFromClient() {
+
+		$filename = $this->filenameSaveToClient(true) ;
+
+		$data = file_get_contents($filename );
+
+		$obj = unserialize($data);
+	
+		return $obj;
+	} 
+
+
 	/*
 	
 		allow each question to be attached to a section - maybe repeat the section
@@ -97,28 +166,10 @@ class Questionnaire {
 	/*
 		this now scans the questionnaires folder
 	 */
-	public static function loadQuestionnaires() {
-
-		$path = app_path() ."/questionnaires/"; 
-		$files = glob($path . "*.php");
-		foreach ($files as $file) {
-			include($file);
-		}
-		Session::put("questionnaires" , self::$questionnaires );
-		return self::$questionnaires;
-	}		
-
 	public static function get($id) {
-		// $q = new Questionnaire($id,self::$questionnaires[$id]['title']);
-		// $q->load();
-		//$path = app_path() ."/questionnaires/"; 
-		//$path = $path.$id.".php";
-		// I need to run the file and capture the output
+
 		self::$questionnaires = Session::get("questionnaires");
 		$q = self::$questionnaires[$id]; 
-		//include($this->path);
-
-		//$q=self::$this_questionnaire;
 		self::$this_questionnaire=$q;
 
 		return $q;
@@ -129,8 +180,13 @@ class Questionnaire {
 	}
 
 	public function start() {
-		$this->current_id=1;
-		$this->current_question=$this->questions[$this->current_id];
+		if(!$this->isSavedToClient) {
+			// msg("not saved");
+			$this->current_id=1;
+			$this->current_question=$this->questions[$this->current_id];
+		} else {
+			msg("Resuming questionnaire");
+		}
 	}
 	function get_question($id=null) {
 		// msg("questionnaire->get_question(id=$id)");
@@ -142,6 +198,10 @@ class Questionnaire {
 			$this->current_id = $id;	// make sure you set it!!			
 		}
 		// msg("get_question() return questions[$id]");
+		if(is_null($id)) {
+			msg("Warning : for some reason, we are not setting the current question ID.");
+			return null;
+		}
 		return $this->questions[$id];
 	}
 	function jumpTo($anchor) {
@@ -160,8 +220,17 @@ class Questionnaire {
 	 */
 	public function next($id) {
 		// msg("Questionnaire->next($id)");
-		if(is_null($id)) msg('error : Questionnaire->next($id); $id is null');
-		array_push($this->question_stack,$this->get_question());
+		if(is_null($id)) msg('Error : Questionnaire->next($id); $id is null');
+		$last_question = $this->get_question();
+		if(is_null($last_question)) {
+			msg("Warning : not getting a last question from get_question(). Probably no ID set");
+		}
+		if(is_null($this->current_question)) {
+			msg("Warning : for some reason the current question is not set");
+		} else {
+			$last_question = $this->current_question;			
+		}
+		array_push($this->question_stack,$last_question);
 		// $this->previous_id=$this->current_id;
 		$this->current_id=$id;
 		$this->current_question=$this->get_question();

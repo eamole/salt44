@@ -64,7 +64,7 @@
 	<div id="header" class="container">
 		<div id="msgs">
 			@foreach(msgs() as $msg)
-				<p>{{$msg}}</p>
+				<p class='message'>{{$msg}}</p>
 			@endforeach
 		</div>
 

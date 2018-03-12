@@ -21,8 +21,6 @@
 			<div class="menuBar">
 				
 				<?php 
-				?>
-				<?php 
 					if( $question->questionnaire->is_last_question() ) {
 						echo Form::submit("Finish");
 					} else {
@@ -37,8 +35,14 @@
 							['class' => "button"]
 						);
 					}
-
 				?>
+				{{  HTML::linkAction(
+						"QuestionnairesController@saveToClient",
+						"Save",
+						null,
+						['class' => "button"]
+					)
+				}}
 
 			</div>
 
