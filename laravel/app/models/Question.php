@@ -261,7 +261,11 @@ class Question {
 		if($this->type=='textarea') {
 			$html .= "<div class='notes-mce question-mce'>";
 				$html .= Form::textarea($this->html_id(),$this->value);
-			$html .= "</div>";			
+			$html .= "</div>";
+			// use values as strings to paste into the notes - needs js
+			if(isset($this->values)) {
+				
+			}
 		}
 		if($this->type=='boolean') {
 			$index = 1;
