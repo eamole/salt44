@@ -18,13 +18,12 @@ class TemplatesController extends BaseController {
 		need to accept the appointment ID to bind the buttons to the appointment
 	 */
 	public static function displayAll($apptId) {
-
-		$html = "<span class='templates_bar'> ";
+		$html = "";
 		foreach (self::$templates as $templateId => $template) {
 			$html .= self::makeButton($apptId,$template['title'],$templateId);
 			// $html .= "<div class='label'>$title</div>";
 		}
-		$html .= "</span>";
+
 		return $html;
 	}
 	public static function makeButton($apptId,$title,$templateId) {

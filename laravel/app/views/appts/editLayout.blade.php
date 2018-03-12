@@ -45,20 +45,23 @@
 
 		</div>
 
+		<div class='template_container'>
+			<div class='mce_box'>
+				{{ myLabel('notes' , 'Notes : ') }}
+					{{ Form::textarea('notes', $appt->notes,[ 'class' => 'notes' , 'id' => 'notes' ]) }} 
 
-		<span class='mce_box'>
-		{{ myLabel('notes' , 'Notes : ') }}
-			{{ Form::textarea('notes', $appt->notes,[ 'class' => 'notes' , 'id' => 'notes' ]) }} 
+			</div>
 
-		</span>
+			<div class='templates_bar'>
+				<!-- only allow templates after the appt has an id - otherwise template error -->
+				@if(!is_null($appt->id))
+					{{ myLabel('' , 'Templates') }} 
+						{{ TemplatesController::displayAll($appt->id) }}
+				@endif
+			</div>
+			
+		</div>
 
-		<?php
-			if(!is_null($appt->id)){
-				echo TemplatesController::displayAll($appt->id);
-			}
-
-		?>
-	
 		<div style="clear:both"></div>
 
 	{{ Form::close() }}
