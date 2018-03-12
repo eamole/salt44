@@ -87,39 +87,47 @@ class Question {
 	 */
 	function next() {
 		if(!isset($this->next)) {
+			// msg('Question->next() - use default next strategy');
 			$id = $this->next_default();
 		} else {
 			// its either a speicifc question - maybe in another questionnaire
 			// // or a function
-			if(is_callable($this->next)) {	// not persistable!! TODO save RT survey {answers/current etc} separate from survey object
+			if(is_callable($this->next)) {	// not persistable!! TODO save RT survey {answers/current etc} separate from survey object - this would be recursive anyway!!
 				$this->next($this);
 			} else if( is_array($this->next)) {
-				// assume a questionnaire and a question id
+				// msg('Question->next() - use array/macro strategy');
+				// assume a questionnaire and a question id, or a macro!!
 				$id = $this->next_macro($this->next);
 			} else {
 				$id = $this->next;	// assume a static ID?
 			}
 		}
-
+		// msg("Question->next : calling questionnaire->next($id)");
 		$this->questionnaire->next($id);  
 	}
 
 	function next_macro($arr) {
-		if($arr[0]=="jump_to") {
+
+		if($arr[0]=="jump_to") {	// unconditional jump
 			return $this->jumpTo($arr[1]); 
 		}
-		if($arr[0]=="if_is") {
+		if($arr[0]=="if") {	// conditional jump
 			$value = $arr[1];
 			if($this->value == $value ) {
+				// msg("question->jumpTo({$arr[2]})");
 				return $this->jumpTo($arr[2]);
 			} else {
 				// proceed as normal
+				// msg("question->next_default()");
 				return $this->next_default();
 			}
 		}
+		// else
+		msg("Error : invalid macro verb : " . $arr[0]);
 	}
 
 	function jumpTo($anchor) {
+		// msg("Question : calling questionnaire->jumpTo($anchor)");
 		return $this->questionnaire->jumpTo($anchor);
 	}
 
@@ -290,7 +298,17 @@ class Question {
 		}
 
 		if($this->type=='text') {
-			$html .= Form::text($this->html_id(),$this->value);			
+			$html .= Form::text($this->html_id(),$this->value);
+			// snippest doen;t work with text fields
+			// if(isset($this->values)) {
+			// 	$html .="<div class='snippets'><span class='snippets'>Snippets</span>";
+			// 	$html .= "<ul class='snippets'>";
+			// 	foreach ($this->values as $key => $value) {
+			// 		$html .= "<li class='snippet'>$value</li>";
+			// 	}
+			// 	$html .= "</ul></div>";
+			// }
+
 		}
 		if($this->type=='number') {
 			$html .= Form::number($this->html_id(),$this->value);			

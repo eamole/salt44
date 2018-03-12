@@ -1,6 +1,6 @@
 <?php
 
-Questionnaire::init('3','Scale Survey')
+Questionnaire::init('3','Scale Survey',__FILE__)
 ->section([
 	'title' => "Medical History",
 	'subtext' =>"Please use the following scale to describe your childs behaviour<br/> 

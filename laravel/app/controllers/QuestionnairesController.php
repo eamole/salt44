@@ -2,7 +2,12 @@
 
 class QuestionnairesController extends BaseController {
 
-
+	public $isSaved = false;
+	public function __destruct() {
+		if(!$this->isSaved) {
+			// msg("Error : Questionnaire not saved");
+		}
+	}
 	/*
 		produce a list of questionnaires to select from
 	 */
@@ -22,9 +27,10 @@ class QuestionnairesController extends BaseController {
 	public function start($id) {
 
 		$questionnaire = Questionnaire::get($id);
+		
 		$questionnaire->start();
 
-		Session::put( "questionnaire" , $questionnaire );
+		$this->save($questionnaire);
 
 		// pose the question
 		return View::make('questionnaires.question',array(
@@ -52,7 +58,8 @@ class QuestionnairesController extends BaseController {
 		$questionnaire->back();
 
 		// save the started questionaire in the Session - allws answers to be saved as well
-		Session::put( "questionnaire" , $questionnaire );
+		// Session::put( "questionnaire" , $questionnaire );
+		$this->save($questionnaire);
 
 		return Redirect::route('questionnaireQuestion' , array($questionnaire->id));
 
@@ -88,13 +95,19 @@ class QuestionnairesController extends BaseController {
 		$question->next();
 
 		// save the started questionaire in the Session - allws answers to be saved as well
-		Session::put( "questionnaire" , $questionnaire );
+		$this->save($questionnaire);
 
 		return Redirect::route('questionnaireQuestion' , array($questionnaire->id));
 		// pose the question
 		return View::make('questionnaires.question',array(
-			'question' => $questionnaire->current_question 
+			'question' => $questionnaire->_question 
 		))->with("title",$questionnaire->title);
+	}
+
+	public function save($questionnaire) {
+
+		Session::put( "questionnaire" , $questionnaire );
+		$this->isSaved = true;
 	}
 
 	public function finish() {

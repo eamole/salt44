@@ -1,6 +1,6 @@
 <?php
 
-Questionnaire::init("1","Initial Questionnaire")
+Questionnaire::init("1","Initial Questionnaire",__FILE__)
 ->questions([
 
 	[

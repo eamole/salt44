@@ -26,6 +26,7 @@ class Questionnaire {
 	public static $questionnaires=[];
 	public $clientId;
 	public $client;
+	public $path;
 	public $id;
 	public $title;
 	public $questions=[];	// array of Question objects
@@ -36,7 +37,10 @@ class Questionnaire {
 	public $current_section;
 	public $current_section_id=0;
 
-	public $current_id;
+	// must keep these in sync
+	public $current_id=1;	// for some reason, it has no current value!!
+	public $current_question;
+
 	public $question_stack=[];	// each question is pushed onto stack to allow back()!!
 	public $next_id;		// this is computed based on the response
 	public $anchors=[];		// array of jumpTo anchors - anchor,id pairs 
@@ -45,12 +49,13 @@ class Questionnaire {
 	
 	public static $this_questionnaire;	// the current questionnaire being defined
 
-	public function __construct($id,$title) {
+	public function __construct($id,$title,$path) {
 		
 		// bind the questionnaire to the client
 		$this->client = Session::get("client");
 		$this->id=$id;
 		$this->title=$title;
+		$this->path=$path;
 
 		// I should now load the questions?
 		// $this->load();
@@ -58,9 +63,9 @@ class Questionnaire {
 	/*
 		this is the "constructor" called from the questionnaire def file
 	 */
-	public static function init($id,$title) {
+	public static function init($id,$title,$path) {
 		// !!! Make sure a client has been selected into Session
-		$q = new Questionnaire($id,$title);
+		$q = new Questionnaire($id,$title,$path);
 		self::$this_questionnaire=$q;
 		self::$questionnaires[$id] = $q;
 		return $q;
@@ -99,19 +104,22 @@ class Questionnaire {
 		foreach ($files as $file) {
 			include($file);
 		}
+		Session::put("questionnaires" , self::$questionnaires );
 		return self::$questionnaires;
 	}		
 
 	public static function get($id) {
 		// $q = new Questionnaire($id,self::$questionnaires[$id]['title']);
 		// $q->load();
-		$path = app_path() ."/questionnaires/"; 
-		$path = $path.$id.".php";
+		//$path = app_path() ."/questionnaires/"; 
+		//$path = $path.$id.".php";
 		// I need to run the file and capture the output
-		
-		include($path);
+		self::$questionnaires = Session::get("questionnaires");
+		$q = self::$questionnaires[$id]; 
+		//include($this->path);
 
-		$q=self::$this_questionnaire;
+		//$q=self::$this_questionnaire;
+		self::$this_questionnaire=$q;
 
 		return $q;
 	}
@@ -122,26 +130,37 @@ class Questionnaire {
 
 	public function start() {
 		$this->current_id=1;
-		$this->previous_id=null;
-		$this->next_id=null;
 		$this->current_question=$this->questions[$this->current_id];
 	}
 	function get_question($id=null) {
-		if (is_null($id)) $id = $this->current_id;
+		// msg("questionnaire->get_question(id=$id)");
+		if (is_null($id)) {
+			$id = $this->current_id;
+			// msg("questionnaire->get_question() : use current_id ($id) ");
+		} else {
+			// msg("questionnaire->question() : set new current_id ($id) ");			
+			$this->current_id = $id;	// make sure you set it!!			
+		}
+		// msg("get_question() return questions[$id]");
 		return $this->questions[$id];
 	}
 	function jumpTo($anchor) {
+		// msg("jump to  : $anchor ");
 		if(isset($this->anchors[$anchor])) {
 			$id = $this->anchors[$anchor];
+			// msg("jump to id  : $id ");
 			return $id;
 		} else {
 			// TODO raise an anchor missing error
+			msg("Error : Cannot find Anchor ($anchor) in Questionnnaire ");
 		}
 	}
 	/*
 		this sets the next question - the next id is identified by the Question itself
 	 */
 	public function next($id) {
+		// msg("Questionnaire->next($id)");
+		if(is_null($id)) msg('error : Questionnaire->next($id); $id is null');
 		array_push($this->question_stack,$this->get_question());
 		// $this->previous_id=$this->current_id;
 		$this->current_id=$id;
