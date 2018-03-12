@@ -179,8 +179,11 @@ class Questionnaire {
 		return count($this->questions);
 	}
 
-	public function start() {
-		if(!$this->isSavedToClient) {
+	public function start($restart = false) {
+		if(!$this->isSavedToClient || $restart) {
+			if($restart) {
+				msg("Restarting questionnaire");
+			}
 			// msg("not saved");
 			$this->current_id=1;
 			$this->current_question=$this->questions[$this->current_id];

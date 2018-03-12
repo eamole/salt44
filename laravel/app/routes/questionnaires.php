@@ -42,3 +42,8 @@ Route::get('questionnaire/saveToClient/',array(
 	'as' =>'questionnaireSaveToClient'
 ));
 
+Route::get('questionnaire/restart/{id}',array(
+	'uses' => "QuestionnairesController@restart",
+	'as' =>'questionnaireRestart'
+));
+

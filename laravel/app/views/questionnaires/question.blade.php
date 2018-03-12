@@ -44,6 +44,14 @@
 					)
 				}}
 
+				{{  HTML::linkAction(
+						"QuestionnairesController@restart",
+						"Restart",
+						[$question->questionnaire->id],
+						['class' => "button"]
+					)
+				}}
+
 			</div>
 
 

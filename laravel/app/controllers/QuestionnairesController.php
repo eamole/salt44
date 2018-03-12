@@ -23,12 +23,15 @@ class QuestionnairesController extends BaseController {
 			'client' => $client 
 		))->with("title","Questionnaires");
 	}
+	public function restart($id) {
+		return $this->start($id,true);
+	}
 
-	public function start($id) {
+	public function start($id,$restart=false) {
 
 		$questionnaire = Questionnaire::get($id);
 		
-		$questionnaire->start();
+		$questionnaire->start($restart);
 
 		$this->save($questionnaire);
 
