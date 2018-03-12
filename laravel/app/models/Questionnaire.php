@@ -37,9 +37,9 @@ class Questionnaire {
 	public $current_section_id=0;
 
 	public $current_id;
-	public $previous_id;	// the last question
+	public $question_stack=[];	// each question is pushed onto stack to allow back()!!
 	public $next_id;		// this is computed based on the response
-
+	public $anchors=[];		// array of jumpTo anchors - anchor,id pairs 
 
 	public static $load_questions;	// questions loaded from include file
 	
@@ -81,12 +81,13 @@ class Questionnaire {
 	public function questions($questions) {
 		foreach($questions as $question ) {
 			// pre increment id
-			$this->questions[++$this->next_question_id] = 
-				Question::init($this,$this->next_question_id,$question);
+			$q = Question::init($this,++$this->next_question_id,$question);
+			$this->questions[$this->next_question_id] = $q;
+			if(isset($q->anchor)) {
+				$this->anchors[$q->anchor] = $this->next_question_id; 
+			} 
 		}
-
 		return $this;
-
 	}
 	/*
 		this now scans the questionnaires folder
@@ -125,13 +126,35 @@ class Questionnaire {
 		$this->next_id=null;
 		$this->current_question=$this->questions[$this->current_id];
 	}
-
-	public function set_question($id) {
-
-		$this->previous_id=$this->current_id;
+	function get_question($id=null) {
+		if (is_null($id)) $id = $this->current_id;
+		return $this->questions[$id];
+	}
+	function jumpTo($anchor) {
+		if(isset($this->anchors[$anchor])) {
+			$id = $this->anchors[$anchor];
+			return $id;
+		} else {
+			// TODO raise an anchor missing error
+		}
+	}
+	/*
+		this sets the next question - the next id is identified by the Question itself
+	 */
+	public function next($id) {
+		array_push($this->question_stack,$this->get_question());
+		// $this->previous_id=$this->current_id;
 		$this->current_id=$id;
-		$this->current_question=$this->questions[$this->current_id];
+		$this->current_question=$this->get_question();
 
+	}
+	public function back() {
+		if(count($this->question_stack)>0) {
+			$this->current_question = array_pop($this->question_stack);
+			$this->current_id=$this->current_question->id;
+		} else {
+			// TODO should record a warning
+		}
 	}
 
 	public function is_last_question() {

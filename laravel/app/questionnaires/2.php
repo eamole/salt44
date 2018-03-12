@@ -21,26 +21,27 @@ Questionnaire::init('2','SALT Referral Questionnaire ')
 	'title' => 'Parent/Guardian Details',
 ])
 ->questions([
-	[	'label' => "Names" ,
-		'type' => "text"
+	[	'label' => "Parent/Guardian Names" ,
+		'type' 	=> "text",
+		'class' => 'big_label'
 	],
 	[	'label' => "Address" ,
-		'type' => "textarea" 
+		'type' 	=> "textarea" 
 	],	
 	[	'label' => "Home Phone " ,
-		'type' => "phone" 
+		'type' 	=> "phone" 
 	],
 	[	'label' => "Work Phone " ,
-		'type' => "phone" 
+		'type' 	=> "phone" 
 	],
 	[	'label' => "Mobile Phone " ,
-		'type' => "phone" 
+		'type' 	=> "phone" 
 	],
 	[	'label' => "Email Address " ,
-		'type' => "email" 
+		'type' 	=> "email" 
 	],
 	[	'label' => "Whoe Referred Your Child" ,
-		'type' => "radio",
+		'type' 	=> "radio",
 		'values' => ['School','GP','Specialist','Self','Hospital']
 	]
 ])
@@ -49,14 +50,20 @@ Questionnaire::init('2','SALT Referral Questionnaire ')
 ])
 ->questions([
 	[	'label' => "Describe your childs birth history. List any complications during pergnancy, birth or infancy" ,
-		'type' => "textarea"
+		'type' 	=> "textarea",
+		'values' => ['Measles','Mumps','Placenta Previa']
 	],
 	[	'label' => "Describe any developmental challenges your child has faced or continues to face" ,
-		'type' => "textarea"
+		'type' => "textarea" ,
+		'values' => ['Dyslexia']
 	],
-	[	'label' => "Does your child have a history of ear infections? How frequently and how has it been treated medically?" ,
-		'type' => "textarea"
+	[	'label' => "Does your child have a history of ear infections?",
+		'type' => 'boolean',
+		'next' => [ "if"  , 'Yes'  , "x" ]
 	],
+	[	'label' => "How frequently and how has it (ear infextions) been treated medically?" ,
+		'type' => "textarea"
+	]
 
 ])
 ->section([
@@ -67,6 +74,7 @@ Questionnaire::init('2','SALT Referral Questionnaire ')
 ->questions([
 	[	'label' => "Sitting independently" ,
 		'type' => "number",
+		'anchor' => 'x'	/* jump to here */
 	],
 	[	'label' => "Crawling" ,
 		'type' => "number",

@@ -24,6 +24,7 @@ class Question {
 	public $text_after;		// if there is text to appear after the input eg units
 	public $help_text;		// this may be help provided to the user
 	public $rules = [];		// laravel validation rules
+	public $anchor;			// a jumpTo label - stored in questionnaire
 
 	public static $jsonQuestion;	// a holder for  question while
 
@@ -42,6 +43,8 @@ class Question {
 		$this->help_text 	= $this->param('help_text');
 		$this->rules 		= $this->param('rules');
 		$this->default 		= $this->param('default');
+		$this->anchor 		= $this->param('anchor');
+		$this->next 		= $this->param('next');
 
 	}
 
@@ -71,29 +74,53 @@ class Question {
 
 	}
 
+	function next_default() {
+		if(!$this->questionnaire->is_last_question()) {
+			$id = $this->id + 1;	// by default, the next question
+		} else {
+			$id = $this->id;
+		} 
+		return $id;		
+	}
 	/*
 		the next question to ask
 	 */
 	function next() {
-		if(is_null($this->next)) {
-			if(!$this->questionnaire->is_last_question()) {
-				$next = $this->id + 1;	// by default, the next question
-			} else {
-				$next = $this->id;
-			} 
+		if(!isset($this->next)) {
+			$id = $this->next_default();
 		} else {
 			// its either a speicifc question - maybe in another questionnaire
 			// // or a function
-			if(is_callable($this->next)) {
-				$this->next();
+			if(is_callable($this->next)) {	// not persistable!! TODO save RT survey {answers/current etc} separate from survey object
+				$this->next($this);
 			} else if( is_array($this->next)) {
 				// assume a questionnaire and a question id
+				$id = $this->next_macro($this->next);
 			} else {
-				$next = $this->next;
+				$id = $this->next;	// assume a static ID?
 			}
 		}
 
-		$this->questionnaire->set_question($next);  
+		$this->questionnaire->next($id);  
+	}
+
+	function next_macro($arr) {
+		if($arr[0]=="jump_to") {
+			return $this->jumpTo($arr[1]); 
+		}
+		if($arr[0]=="if_is") {
+			$value = $arr[1];
+			if($this->value == $value ) {
+				return $this->jumpTo($arr[2]);
+			} else {
+				// proceed as normal
+				return $this->next_default();
+			}
+		}
+	}
+
+	function jumpTo($anchor) {
+		return $this->questionnaire->jumpTo($anchor);
 	}
 
 	function __toString() {
@@ -136,6 +163,15 @@ class Question {
 				$this->value = $this->values[$this->value];
 			}
 		}
+		if($this->type=='boolean') {
+			$values = ['Yes','No'];	// warning 0 = Yes!! 1 = no
+			if(isset($this->value)){	// trap empty values				
+				$this->value=$values[$this->value];	// label
+			} else {
+				$this->value='Unknown';
+			}
+		}
+
 	}
 
 	/*
@@ -143,7 +179,7 @@ class Question {
 	 */
 	public function render() {
 
-		$html="<h3>Q.".$this->id." of ".$this->questionnaire->count()."</h3>";
+		$html="<h3>Q ".$this->id." of ".$this->questionnaire->count()."</h3>";
 		
 		if(!empty($this->section)) {
 			$html .= "<h4>".$this->section['title'] . "</h4>";
@@ -154,7 +190,13 @@ class Question {
 		
 		if(is_null($this->value)) {
 			if($this->default) {
-				$this->value = $this->default;
+				// special values
+				if($this->default=="today") 
+					$default = date('Y-m-d', time());
+				else 
+					$default = $this->default;
+
+				$this->value = $default;
 			}
 		}
 
@@ -162,7 +204,7 @@ class Question {
 			need a div to wrap around the label and the values 
 			if values is an array
 		 */ 
-		$html .= myLabel($this->html_id() , $this->label );
+		$html .= myLabel($this->html_id() , $this->label , ['class' => 'big_label']);
 
 		if($this->type=='checkbox') {
 			$index = 1;
@@ -216,6 +258,27 @@ class Question {
 				$html .= "</div>";
 			}				
 		}
+		if($this->type=='textarea') {
+			$html .= "<div class='notes-mce question-mce'>";
+				$html .= Form::textarea($this->html_id(),$this->value);
+			$html .= "</div>";			
+		}
+		if($this->type=='boolean') {
+			$index = 1;
+			foreach(['Yes','No'] as $key => $value) {
+				$html .= "<div class='value_container'>";
+
+				$html .= Form::label($this->html_id($index) , $value , $this->attribs);
+				// name is common to all values,id is unique to use label as click region
+				$html .= Form::radio($this->html_id(),$key,null,array("id" => $this->html_id($index++)));
+
+				$html .= "</div>";
+			}
+		}
+		if($this->type=='date') {
+			$html .= Form::input('date',$this->html_id(),$this->value);			
+		}
+
 		if($this->type=='text') {
 			$html .= Form::text($this->html_id(),$this->value);			
 		}
@@ -227,9 +290,6 @@ class Question {
 		}
 		if($this->type=='password') {
 			$html .= Form::password($this->html_id(),$this->value);			
-		}
-		if($this->type=='date') {
-			$html .= Form::input('date',$this->html_id(),$this->value);			
 		}
 		if($this->type=='time') {
 			$html .= Form::input('time',$this->html_id(),$this->value);			
@@ -252,11 +312,6 @@ class Question {
 		if($this->type=='tel' || $this->type=='phone' ) {
 			$html .= Form::input('tel',$this->html_id(),$this->value);			
 		}
-		if($this->type=='textarea') {
-			$html .= Form::textarea($this->html_id(),$this->value);			
-		}
-
-
 
 		return $html;
 	}

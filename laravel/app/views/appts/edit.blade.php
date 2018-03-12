@@ -3,7 +3,7 @@
 
 @section("content")
 
-	<?php $returnRoute='apptAdd'; ?>
+	<?php $returnRoute='apptEdit'; ?>
 
 	@include('appts.editLayout')
 

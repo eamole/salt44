@@ -48,26 +48,23 @@
 
 	
 	<h1>Speech & Language Therapy System</h1>
+	<!-- login button -->
+	{{ LoginController::logInOutButton() }}
+	<!-- {{ HTML::linkRoute('login',"Login" , null , ['class' => 'button']) }} -->
 
 
 	{{ $menuBar->asUl(['class' => 'menuBar']) }} 
 
-	<!-- login button -->
-	{{ LoginController::logInOutButton() }}
-	<!-- {{ HTML::linkRoute('login',"Login" , null , ['class' => 'button']) }} -->
 
 	<h2>{{ $title }}</h2>
 
 
 	<div id="header" class="container">
-		<?php $messages=Config::get('app.messages'); ?>
-		@if(count($messages)>0)
-			@foreach($messages as $msg)
+		<div id="msgs">
+			@foreach(msgs() as $msg)
 				<p>{{$msg}}</p>
 			@endforeach
-		@else
-
-		@endif
+		</div>
 
 		@foreach($errors->all() as $msg)
 			<p class='message'>{{$msg}}</p>

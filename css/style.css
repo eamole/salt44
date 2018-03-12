@@ -8,14 +8,16 @@ h4 {
 
 
 
-/*
-  apply some styling to inputs on dataTables
- */
+.notes-mce {
+  display:inline-block;
+}
+.question-mce {
+  width : 80%;
+}
 .mce-container-body {
   width : 80%;
   display: inline-block;
 }
-
 .mce_box {
   float:left;
   width:80%;
@@ -25,7 +27,9 @@ h4 {
   float:right;
   display: inline-block;
 }
-
+/*
+  apply some styling to inputs on dataTables
+ */
 .dataTable {
   border: 1px solid #4E9CAF;
   border-radius: 5px;
@@ -92,6 +96,8 @@ span.menuBar {
   width : 90%;
   display: inline-block;
   background-color: #8FBC8F;
+  border-radius: 5px;
+  margin : 10px;
 }
 
 ul > li.navbar, ul > li.navbar> a {
@@ -170,7 +176,20 @@ form, .form {
 	background-color: #8FBC8F ;
   border : 1px solid #4E9CAF;
   border-radius: 5px;
-
+  vertical-align: top;
+}
+.big_label {
+  /* ideally would like to refer to prev and override */
+  display :inline-block ;
+  padding: 10px;
+  margin-bottom :5px;
+  width : 150px;
+  text-align : right;
+  background-color: #8FBC8F ;
+  border : 1px solid #4E9CAF;
+  border-radius: 5px;
+  vertical-align: top;
+  
 }
 span.input {
 
@@ -272,4 +291,10 @@ div.value_container {
 }
 span.timestamp {
   float:right;
+}
+
+h1 {
+  display : inline-block ;  /* allow login/out to appear on same line */
+  margin : 5px;
+  width:80%;
 }

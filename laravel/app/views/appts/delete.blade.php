@@ -3,15 +3,6 @@
 
 @section("content")
 
-	@include('appts.displayLayout')
-
-	<div class="container">
-
-		
-		Warning : you are about to delete this Appointment.<br/> Are you sure you wish to proceed?<br/>
-
-	</div>
-	
 	<div class="menuBar">
 
 		<?php 
@@ -24,6 +15,17 @@
 
 
 	</div>
+
+
+	@include('appts.displayLayout')
+
+	<div class="container">
+
+		
+		Warning : you are about to delete this Appointment.<br/> Are you sure you wish to proceed?<br/>
+
+	</div>
+	
 
 
 

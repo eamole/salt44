@@ -49,7 +49,7 @@ class QuestionnairesController extends BaseController {
 		$questionnaire = Session::get('questionnaire');		
 		// go back to prev question 
 		// this is not repeatable!! needs a stack
-		$questionnaire->set_question($questionnaire->previous_id);
+		$questionnaire->back();
 
 		// save the started questionaire in the Session - allws answers to be saved as well
 		Session::put( "questionnaire" , $questionnaire );

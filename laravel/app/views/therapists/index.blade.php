@@ -3,12 +3,12 @@
 
 @section("content")
 
-	@include('therapists.table')
-
 	<div class="menuBar">
 
 		{{ HTML::linkRoute('therapistAdd',"Add Therapist" , null , ['class' => 'button']) }}
 	
 	</div>
+
+	@include('therapists.table')
 
 @endsection

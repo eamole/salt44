@@ -3,6 +3,19 @@
 	<!-- onSubmit go to clientSave,and pass in the route to this form (for errors) -->
 	{{ Form::model( $client , array('route' => 'clientSave' )) }}
 	
+
+		<div class="menuBar">
+			
+			<?php 
+				$urlCancel = URL::route('clientDisplay',array($client->id));
+			?>
+
+			{{ Form::submit("Save Client") }}
+			<a class='button' href='{{$urlCancel}}'>Cancel</a>
+			
+		</div>
+
+
 		<div class='panel'>
 			<!-- {{ myLabel('id','ID  :') }} -->
 			 {{ Form::input('hidden','id' , $client->id , ['readonly'] )  }} 
@@ -50,16 +63,6 @@
 			{{ Form::textarea('notes',$client->notes , [ 'class' => 'notes' ] ) }} <br/>
 
 
-		<div class="menuBar">
-			
-			<?php 
-				$urlCancel = URL::route('clientDisplay',array($client->id));
-			?>
-
-			{{ Form::submit("Save Client") }}
-			<a class='button' href='{{$urlCancel}}'>Cancel</a>
-			
-		</div>
 
 	{{ Form::close() }}
 	

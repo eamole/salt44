@@ -17,45 +17,59 @@
 			<!-- $question }} -->
 			{{ $question->render() }} 
 
-		<br clear='all' />
+			<br clear='all' />
 
-		<div class="menuBar">
-			
-			<?php 
-				// $urlCancel = URL::route('questionnaireBack',array($question->questionnaire->id,$question->id));
-			?>
-			<?php 
-				if( $question->questionnaire->is_last_question() ) {
-					echo Form::submit("Finish");
-					// echo HTML::linkAction(
-					// 	"QuestionnairesController@finish",
-					// 	"Finish",
-					// 	[$question->questionnaire->id],
-					// 	['class' => "button"]
-					// );
-				} else {
-					echo Form::submit("Next");
-				}
+			<div class="menuBar">
+				
+				<?php 
+					// $urlCancel = URL::route('questionnaireBack',array($question->questionnaire->id,$question->id));
+				?>
+				<?php 
+					if( $question->questionnaire->is_last_question() ) {
+						echo Form::submit("Finish");
+						// echo HTML::linkAction(
+						// 	"QuestionnairesController@finish",
+						// 	"Finish",
+						// 	[$question->questionnaire->id],
+						// 	['class' => "button"]
+						// );
+					} else {
+						echo Form::submit("Next");
+					}
 
 
 
-				if(!$question->questionnaire->is_first_question() ) {
-					echo HTML::linkAction(
-						"QuestionnairesController@back",
-						"Back",
-						[$question->questionnaire->id],
-						['class' => "button"]
-					);
-				}
+					if(!$question->questionnaire->is_first_question() ) {
+						echo HTML::linkAction(
+							"QuestionnairesController@back",
+							"Back",
+							[$question->questionnaire->id],
+							['class' => "button"]
+						);
+					}
 
-			?>
-<!-- 			<a class='button' href='$urlCancel}}'>Back</a>
-			<a class='button' href='$urlCancel}}'>Cancel</a> 
- -->			
+				?>
+	<!-- 			<a class='button' href='$urlCancel}}'>Back</a>
+				<a class='button' href='$urlCancel}}'>Cancel</a> 
+	 -->			
 		</div>
+
 
 		{{ Form::close() }}
 
 
 	</div>
+
+	{{ HTML::script('js/tinymce/js/tinymce/tinymce.js') }}
+
+	<script type="text/javascript">
+		
+		tinymce.init({
+    		selector: 'textarea',
+    		width : "50%",
+    		display:"inline-block"
+
+  		});
+	</script>		
+
 @stop

@@ -5,6 +5,18 @@
 	?>
 	<!-- onSubmit go to therapistSave,and pass in the route to this form (for errors) -->
 	{{ Form::model( $therapist , array('route' => 'therapistSave' )) }} 
+
+		<div class="menuBar">
+			
+			<?php 
+				$urlCancel = URL::route('therapistDisplay',array($therapist->id));
+			?>
+
+			{{ Form::submit("Save Therapist") }}
+			<a class='button' href='{{$urlCancel}}'>Cancel</a>
+			
+		</div>
+
 		<div class='panel'>
 
 			<!-- {{ myLabel('id','ID  :') }} -->
@@ -48,17 +60,6 @@
 
 		</div>
 
-		<br clear='all' />
-
-		<div class="menuBar">
-			
-			<?php 
-				$urlCancel = URL::route('therapistDisplay',array($therapist->id));
-			?>
-
-			{{ Form::submit("Save Therapist") }}
-			<a class='button' href='{{$urlCancel}}'>Cancel</a>
-			
-		</div>
+		<br clear="all"/>
 
 	{{ Form::close() }}

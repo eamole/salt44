@@ -3,9 +3,6 @@
 
 @section("content")
 
-		
-	@include('clients.displayLayout')
-
 
 	<div class="menuBar">
 		{{ HTML::linkRoute('clientEdit','Edit Client',$client->id,  ['class' => 'button']) }}
@@ -15,6 +12,9 @@
 		{{ HTML::linkRoute('questionnairesDisplayAll','Questionnaires',$client->id,  ['class' => 'button']) }}		
 		{{ HTML::linkRoute('clientsDisplayAll','Cancel' , null , ['class' => 'button']) }}
 	</div>
+		
+	@include('clients.displayLayout')
+
 
 @endsection
 

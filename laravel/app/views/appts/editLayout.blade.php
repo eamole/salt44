@@ -2,6 +2,17 @@
 
 	<!-- onSubmit go to apptSave,and pass in the route to this form (for errors) -->
 	{{ Form::model( $appt , array('route' => array('apptSave' , $returnRoute ))) }}
+
+		<div class="menuBar">
+			
+			<?php 
+				$urlCancel = URL::route('apptsDisplayAll');	// array($appt->id)
+			?>
+
+			{{ Form::submit("Save Appointment") }}
+			<a class='button' href='{{$urlCancel}}'>Cancel</a>
+			
+		</div>
 	
 		<div class='panel' >
 
@@ -34,7 +45,7 @@
 
 		</div>
 
-		<br clear='all' />
+
 		<span class='mce_box'>
 		{{ myLabel('notes' , 'Notes : ') }}
 			{{ Form::textarea('notes', $appt->notes,[ 'class' => 'notes' , 'id' => 'notes' ]) }} 
@@ -47,17 +58,8 @@
 			}
 
 		?>
-
-		<div class="menuBar">
-			
-			<?php 
-				$urlCancel = URL::route('apptsDisplayAll');	// array($appt->id)
-			?>
-
-			{{ Form::submit("Save Appointment") }}
-			<a class='button' href='{{$urlCancel}}'>Cancel</a>
-			
-		</div>
+	
+		<div style="clear:both"></div>
 
 	{{ Form::close() }}
 
