@@ -56,7 +56,8 @@ Questionnaire::init('2','SALT Referral Questionnaire',__FILE__)
 	'title' => 'Developmental and Medical History',
 ])
 ->questions([
-	[	'label' => "Describe your childs birth history. List any complications during pergnancy, birth or infancy" ,
+	[	'label' => "Describe your childs birth history. 
+					List any complications during pergnancy, birth or infancy" ,
 		'type' 	=> "textarea",
 		'values' => ['Measles','Mumps','Placenta Previa']
 	],
@@ -96,7 +97,12 @@ Questionnaire::init('2','SALT Referral Questionnaire',__FILE__)
 ])
 ->section([
 	'title' => "Medical History",
-	'subtext' => $scale ,
+	'subtext' => "Please use the following scale to describe your childs behaviour<br/> 
+			<h6>1 - Never or rarely exhibits this behaviour<br/>
+			2 - Occasionally exhibits this behaviour<br/>
+			3 - Exhibits this behaviour as much as is typical for child of this age<br/>
+			4 - Exhibits this behaviour more often than expected<br/>
+			5 - Very frequently exhibits this behaviour<br/></h6>",
 	// common question parameters - maybe create a defaults array
 	'type' => 'scale' ,
 	'scale' => [1,5],
@@ -169,7 +175,7 @@ Questionnaire::init('2','SALT Referral Questionnaire',__FILE__)
 	[	'label' => "Physical Therapist" ],
 	[	'label' => "Speech Therapist" 	],
 	[	'label' => "Neurologist" 		],
-	[	'label' => "Resource of Special Teacher" 	],
+	[	'label' => "Resource or Special Teacher" 	],
 	[	'label' => "Other" 				]
 ])
 ->section([
@@ -197,19 +203,20 @@ Questionnaire::init('2','SALT Referral Questionnaire',__FILE__)
 ])
 ->section([
 	'title' => "Behaviour/Emotional Components" , 
-	'subtext' =>"Please use the following scale to describe your childs behaviour<br/> 
-			1 - Never or rarely exhibits this behaviour<br/>
+	'subtext' => "Please use the following scale to describe your childs behaviour<br/> 
+			<h6>1 - Never or rarely exhibits this behaviour<br/>
 			2 - Occasionally exhibits this behaviour<br/>
 			3 - Exhibits this behaviour as much as is typical for child of this age<br/>
 			4 - Exhibits this behaviour more often than expected<br/>
-			5 - Very frequently exhibits this behaviour<br/>",
+			5 - Very frequently exhibits this behaviour<br/></h6>",
 	// common question parameters - maybe create a defaults array
 	'type' => 'scale' ,
 	'scale' => [1,5],
 	'rules' => 'required'
 ])
 ->questions([
-	[	'label' => "Compliant" 		],
+	[	'label' => "Compliant",
+		'anchor' => 'no_testing' 		],
 	[	'label' => "Displays affection towards others" 	],
 	[	'label' => "Displays aggression towards self" 		],
 	[	'label' => "Displays aggession towards others" 		],
