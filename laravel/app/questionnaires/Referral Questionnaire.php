@@ -5,7 +5,7 @@ $scale = "Please use the following scale to describe your childs behaviour<br/>
 			2 - Occasionally exhibits this behaviour<br/>
 			3 - Exhibits this behaviour as much as is typical for child of this age<br/>
 			4 - Exhibits this behaviour more often than expected<br/>
-			5 - Very frequently exhibits this behaviour<br/></h6>"
+			5 - Very frequently exhibits this behaviour<br/></h6>";
 
 Questionnaire::init('2','SALT Referral Questionnaire',__FILE__)
 ->section([
@@ -334,7 +334,7 @@ Questionnaire::init('2','SALT Referral Questionnaire',__FILE__)
 	[	'label' => "Able to perform sequential tasks" 		],
 	[	'label' => "Jumps" 		],
 	[	'label' => "Plays on playground equipment" 		],
-	[	'label' => "Swings" 		],
+	[	'label' => "Plays on Swings" 		],
 	[	'label' => "Enjoys roughhouse type play" ],
 	[	'label' => "Takes risks" 		],
 	[	'label' => "Seems aware of safety concerns" ]

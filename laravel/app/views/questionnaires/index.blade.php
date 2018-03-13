@@ -9,6 +9,7 @@
 			<thead>
 				<tr>
 					<th>Questionnaires for Client : {{ $client->name }}</th>
+					<th>Saved</th>
 				</tr>
 			</thead>
 
@@ -22,6 +23,9 @@
 								'questionnaireStart', 
 								$questionnaire->title , 
 								$questionnaire->id) }}
+						</td>
+						<td>
+							{{ yesNo($questionnaire->isSavedToClient()) }}
 						</td>
 					</tr>
 				@endforeach

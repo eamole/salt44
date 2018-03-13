@@ -124,6 +124,8 @@ class Question {
 		}
 		// else
 		msg("Error : invalid macro verb : " . $arr[0]);
+		return $this->next_default();	// to at least continue working?
+
 	}
 
 	function jumpTo($anchor) {

@@ -23,12 +23,15 @@ class QuestionnairesController extends BaseController {
 			'client' => $client 
 		))->with("title","Questionnaires");
 	}
+	public function restart($id) {
+		return $this->start($id,true);
+	}
 
-	public function start($id) {
+	public function start($id,$restart=false) {
 
 		$questionnaire = Questionnaire::get($id);
 		
-		$questionnaire->start();
+		$questionnaire->start($restart);
 
 		$this->save($questionnaire);
 
@@ -103,11 +106,39 @@ class QuestionnairesController extends BaseController {
 			'question' => $questionnaire->_question 
 		))->with("title",$questionnaire->title);
 	}
-
+	/*
+		save to session
+	 */
 	public function save($questionnaire) {
 
 		Session::put( "questionnaire" , $questionnaire );
 		$this->isSaved = true;
+	}
+	/*
+		the name of the file used to save a questionnaire for a client
+	 */
+	public function filenameSaveToClient($includePath=false) {
+		// really should have this stored in the QuestionnaireContrller object
+		// and persisted
+		return $questionnaire->filenameSaveToClient($includePath);
+
+	}
+	/*
+		this is a route
+	 */
+	public function saveToClient() {
+		
+		$questionnaire = Session::get('questionnaire');		
+		
+		$questionnaire->saveToClient() ;
+
+		return Redirect::route('questionnairesDisplayAll' , 
+			array($questionnaire->client->id));
+
+	}
+
+	public function loadFromClient() {
+
 	}
 
 	public function finish() {
@@ -134,6 +165,13 @@ class QuestionnairesController extends BaseController {
 		// insert the answers into the top of the notes - need a p tag to allow insert
 		$questionnaire->client->notes ="<p/><hr/>" . $section . "<br/><hr/>" . $questionnaire->client->notes;
 		$questionnaire->client->save();
+
+		// we actually should delete the session fro the session at least if not the client as well
+		Session::pull("questionnaire");
+		
+		// always keep a copy?
+		$questionnaire->saveToClient();
+
 
 		return $view;
 
