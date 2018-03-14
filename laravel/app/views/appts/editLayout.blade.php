@@ -6,9 +6,11 @@
 		<div class="menuBar">
 			
 			<?php 
-				$urlCancel = URL::route('apptsDisplayAll');	// array($appt->id)
+				if($from=='add')
+					$urlCancel = URL::route('apptsDisplayAll');
+				else 
+					$urlCancel = URL::route('apptDisplay',array($appt->id));
 			?>
-
 			{{ Form::submit("Save Appointment") }}
 			<a class='button' href='{{$urlCancel}}'>Cancel</a>
 			

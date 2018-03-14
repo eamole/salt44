@@ -9,7 +9,10 @@
 		<div class="menuBar">
 			
 			<?php 
-				$urlCancel = URL::route('therapistDisplay',array($therapist->id));
+				if($from=='add')
+					$urlCancel = URL::route('therapistsDisplayAll');
+				else 
+					$urlCancel = URL::route('therapistDisplay',array($therapist->id));
 			?>
 
 			{{ Form::submit("Save Therapist") }}

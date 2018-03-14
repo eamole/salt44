@@ -7,9 +7,11 @@
 		<div class="menuBar">
 			
 			<?php 
-				$urlCancel = URL::route('clientDisplay',array($client->id));
+				if($from=='add')
+					$urlCancel = URL::route('clientsDisplayAll');
+				else 
+					$urlCancel = URL::route('clientDisplay',array($client->id));
 			?>
-
 			{{ Form::submit("Save Client") }}
 			<a class='button' href='{{$urlCancel}}'>Cancel</a>
 			

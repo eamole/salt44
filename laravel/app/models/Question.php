@@ -73,7 +73,9 @@ class Question {
 		return $value;
 
 	}
-
+	/*
+		returns the next id 
+	 */
 	function next_default() {
 		if(!$this->questionnaire->is_last_question()) {
 			$id = $this->id + 1;	// by default, the next question
@@ -105,7 +107,9 @@ class Question {
 		// msg("Question->next : calling questionnaire->next($id)");
 		$this->questionnaire->next($id);  
 	}
-
+	/*
+		this returns the next ID
+	 */
 	function next_macro($arr) {
 
 		if($arr[0]=="jump_to") {	// unconditional jump
@@ -127,7 +131,9 @@ class Question {
 		return $this->next_default();	// to at least continue working?
 
 	}
-
+	/*
+		
+	 */
 	function jumpTo($anchor) {
 		// msg("Question : calling questionnaire->jumpTo($anchor)");
 		return $this->questionnaire->jumpTo($anchor);
@@ -324,8 +330,9 @@ class Question {
 		if($this->type=='time') {
 			$html .= Form::input('time',$this->html_id(),$this->value);			
 		}
-		if($this->type=='color') {
-			$html .= Form::input('color',$this->html_id(),$this->value);			
+		if($this->type=='color' || $this->type=='colour') {
+			if(!isset($this->value)) $this->value = '#ff0000';
+			$html .= Form::input('color',$this->html_id(),$this->value,array('style'=>'height:50px'));			
 		}
 		if($this->type=='month') {
 			$html .= Form::input('month',$this->html_id(),$this->value);			

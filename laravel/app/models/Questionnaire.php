@@ -207,6 +207,20 @@ class Questionnaire {
 		}
 		return $this->questions[$id];
 	}
+	/*
+		returns the next id 
+	 */
+	function next_default() {
+		if(!$this->is_last_question()) {
+			$id = $this->current_question->id + 1;	// by default, the next question
+		} else {
+			$id = $this->current_question->id;
+		} 
+		return $id;		
+	}	
+	/*
+		this gets the ID of the jumpTo anchor
+	 */
 	function jumpTo($anchor) {
 		// msg("jump to  : $anchor ");
 		if(isset($this->anchors[$anchor])) {
@@ -216,6 +230,7 @@ class Questionnaire {
 		} else {
 			// TODO raise an anchor missing error
 			msg("Error : Cannot find Anchor ($anchor) in Questionnnaire ");
+			return $this->next_default();
 		}
 	}
 	/*

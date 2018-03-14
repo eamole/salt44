@@ -3,7 +3,7 @@
 
 @section("content")
 
-	@include('clients.editLayout')
+	@include('clients.editLayout',['from'=>'add'])
 
 @endsection
 

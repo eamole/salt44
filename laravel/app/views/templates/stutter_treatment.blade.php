@@ -1,7 +1,3 @@
-<?php
-
-echo "<div>Hello from PHP</div>";
-?>
-<div>And this is HTML</div>
-And this is Blade Appt->id : {{ $appt->id }}
-{{ $appt->therapist->name}}
+<h4>Stutter Treatment</h4>
+<div>Therapist : {{ $appt->therapist->name}}</div>
+<div>Insert a series of steps here as a standard treatment for curing or managing a stutter</div>

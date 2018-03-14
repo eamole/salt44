@@ -3,7 +3,7 @@
 
 @section("content")
 
-	@include('therapists.editLayout')
+	@include('therapists.editLayout' , ['from' => 'edit'] )
 
 @endsection
 

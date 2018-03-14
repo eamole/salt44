@@ -5,7 +5,7 @@
 	
 	<?php $returnRoute='apptAdd'; ?>
 
-	@include('appts.editLayout')
+	@include('appts.editLayout',['from'=>'add'])
 
 @endsection
 

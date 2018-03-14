@@ -12,7 +12,7 @@ class TemplatesController extends BaseController {
 	private static $templates = array(
 			'1' => ['title' => "Initial Session", 'url'  => "/initial_session_template" ],
 			'2' => ['title' => "Stutter" , 'url' => "/stutter_treatment"],
-			'3' => ['title' => "Postnasl Drip" , 'url' => "/swallow_treatment"]
+			'3' => ['title' => "Postnasl Drip" , 'url' => "/post_nasal_treatment"]
 			);
 	/*
 		need to accept the appointment ID to bind the buttons to the appointment

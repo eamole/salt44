@@ -4,7 +4,7 @@
 
 @section('content')
 
-  <div id='myGoogleMapContainer'><div id="myGoogleMap">The Google Map will go here</div></div>
+  <div id='myGoogleMapContainer'><div id="myGoogleMap">Loading Google Map.....</div></div>
   <script src="https://maps.googleapis.com/maps/api/js?key={{google_key()}}"></script>
   <script>
 

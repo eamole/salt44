@@ -2,6 +2,13 @@
 
 
 @section("content")
+
+	<div class="container warning">
+		
+		Warning : you are about to delete this record.<br/> Are you sure you wish to proceed?<br/>
+
+	</div>
+
 	
 	<div class="menuBar">
 
@@ -17,17 +24,6 @@
 	</div>
 
 	@include('clients.displayLayout')
-
-
-	<div class="container">
-
-		
-		Warning : you are about to delete this record.<br/> Are you sure you wish to proceed?<br/>
-
-	</div>
-	
-
-
 
 
 @endsection
