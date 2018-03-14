@@ -178,7 +178,7 @@ class ApptsController extends BaseController {
 				'therapist_id' =>'required|exists:therapists,id',	
 				'client_id' =>'required|exists:clients,id',	
 				'date' =>  'date|after:'.date('Y-m-d',time() - 60 * 60 * 24),
-				'finish' =>  'after:start',
+				// 'finish' =>  'after:start',
 			);
 		} else {
 			//unique constraints not working with edit - finsing the original record!
@@ -186,8 +186,8 @@ class ApptsController extends BaseController {
 				'therapist_id' =>'required|exists:therapists,id',	
 				'client_id' =>'required|exists:clients,id',	
 				'date' =>  'date|after:'.date('Y-m-d',time() - 60 * 60 * 24),
-				'start' => 'min:"09:00"',
-				'finish' =>  'after:start, max:"17:00"'
+				// 'start' => 'min:"09:00"',
+				// 'finish' =>  'after:start, max:"17:00"'
 			);
 
 		}
